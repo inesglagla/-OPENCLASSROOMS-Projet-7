@@ -41,10 +41,10 @@ exports.signup = (req, res, next) => {
 
 //Système de connexion
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ email: req.body.email, username: req.body.username })
         .then(user => {
             if(!user) {
-                return res.status(401).json({ message: 'Mot de passe ou adresse incorrect!' });
+                return res.status(401).json({ message: 'Une information est incorrect.' });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
