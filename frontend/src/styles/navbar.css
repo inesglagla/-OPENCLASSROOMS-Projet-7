@@ -1,0 +1,32 @@
+body {
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    margin: auto;
+    background-color: white;
+}
+
+.g-banner {
+    margin: auto;
+    text-align: center;
+    background-color: #FD2D01;
+    border: 5px solid #4E5166;
+}
+
+.g-logo {
+    padding: 10px;
+	width: 360px;
+    height: 210px;
+}
+
+.g-textbloc {
+    background-color: #4E5166;
+    display: flex;
+	flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.g-text {
+    color: white;
+    font-size: 20px;
+}

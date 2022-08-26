@@ -10,21 +10,21 @@ emailValidity = (email) => {
 }
 
 //Validité du pseudo avec regEx
-pseudoValidity = (pseudo) => {
-    return /^[a-zA-Z0-9_-]{4,16}$/.test(pseudo);
+usernameValidity = (username) => {
+    return /^[a-zA-Z0-9_-]{4,16}$/.test(username);
 }
 
 //Système d'inscription
 exports.signup = (req, res, next) => {
     if (emailValidity(req.body.email)) {
         console.log(req.body.password);
-        if (pseudoValidity(req.body.pseudo)) {
+        if (usernameValidity(req.body.username)) {
             bcrypt.hash(req.body.password, 10)
             .then(hash => {
                 const user = new User({
                     email: req.body.email,
                     password: hash,
-                    pseudo: req.body.pseudo
+                    username: req.body.username
                 });
                 user.save()
                 .then(() => res.status(201).json({ message: 'Compte créé!' }))
@@ -32,7 +32,7 @@ exports.signup = (req, res, next) => {
             })
             .catch(error => res.status(500).json({ error })); 
         } else {
-            return res.status(401).json({ message: 'Veuillez choisir un pseudo valide.' });
+            return res.status(401).json({ message: "Veuillez choisir un nom d'utilisateur valide." });
         }
     } else {
         return res.status(401).json({ message: 'Veuillez choisir une adresse mail valide.' });

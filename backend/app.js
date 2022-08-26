@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require ('cors');
 require("dotenv").config();
 
 const userRoutes = require('./routes/user');
@@ -13,6 +14,7 @@ mongoose.connect(process.env.MONGODBURL,
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use(express.json());
+app.use(cors());
 
 //Header permettant d'éviter les erreurs CORS
 app.use((req, res, next) => {
