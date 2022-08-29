@@ -6,7 +6,7 @@ import '../../styles/loginsign.css';
 
 function Login () {
 
-  const url= 'http://localhost:3000/api/auth/login';
+  const url = 'http://localhost:3000/api/auth/login';
   const [data, setData] = useState({
     username:'',
     email:'',
@@ -17,7 +17,7 @@ function Login () {
   const navigate = useNavigate();
 
   function handle(e) {
-    const newdata={...data};
+    const newdata = {...data};
     newdata[e.target.id] = e.target.value;
     setData(newdata);
   }

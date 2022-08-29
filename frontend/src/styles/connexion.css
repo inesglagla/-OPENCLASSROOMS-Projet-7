@@ -1,0 +1,16 @@
+.container-co {
+    margin-top: 120px;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-co {
+    padding: 20px;
+}
+
+.text-co h1, .text-co h2 {
+    color: #4E5166;
+}

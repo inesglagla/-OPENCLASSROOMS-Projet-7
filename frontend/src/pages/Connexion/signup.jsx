@@ -5,7 +5,7 @@ import Navbar from "../../components/Navbar";
 import '../../styles/loginsign.css';
 
 function Signup () {
-  const url= 'http://localhost:3000/api/auth/signup';
+  const url = 'http://localhost:3000/api/auth/signup';
   const [data, setData] = useState({
     username:'',
     email:'',
@@ -34,7 +34,7 @@ function Signup () {
   }
 
   function handle(e) {
-    const newdata={...data};
+    const newdata = {...data};
     newdata[e.target.id] = e.target.value;
     setData(newdata);
   }
