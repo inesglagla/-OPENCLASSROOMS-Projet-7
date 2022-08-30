@@ -23,8 +23,7 @@ function Signup () {
       password: data.password,
     })
     .then(res => {
-      navigate('/home');
-      console.log(res.data);
+      navigate('/login');
     })
     .catch((error)=> {
 			if ( error.response && error.response.status >= 400 && error.response.status <= 500) {

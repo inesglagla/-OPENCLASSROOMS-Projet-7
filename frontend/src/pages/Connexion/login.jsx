@@ -25,14 +25,12 @@ function Login () {
   function submit(e) {
     e.preventDefault();
     Axios.post(url, {
-      username: data.username,
       email: data.email,
       password: data.password,
     })
     .then(res => {
       localStorage.setItem("token", res.data);
       navigate('/home');
-      console.log(res.data);
     })
     .catch((error)=> {
 			if ( error.response && error.response.status >= 400 && error.response.status <= 500) {
@@ -48,10 +46,6 @@ function Login () {
           <form onSubmit={(e) => submit(e)}>
             <div className="form-group">
               <h2>Se connecter</h2>
-              <div className="form-field">
-                <label>Nom d'utilisateur</label>
-                <input onChange={(e) => handle(e)} type="text" id="username" name="username" value={data.username}/>
-              </div>
               <div className="form-field">
                 <label>Email</label>
                 <input onChange={(e) => handle(e)} type="email" id="email" name="email" value={data.email}/>

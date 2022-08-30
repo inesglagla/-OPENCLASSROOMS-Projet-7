@@ -14,10 +14,9 @@ usernameValidity = (username) => {
     return /^[a-zA-Z0-9_-]{4,16}$/.test(username);
 }
 
-//Système d'inscription
+//Inscription
 exports.signup = (req, res, next) => {
     if (emailValidity(req.body.email)) {
-        console.log(req.body.password);
         if (usernameValidity(req.body.username)) {
             bcrypt.hash(req.body.password, 10)
             .then(hash => {
@@ -28,7 +27,7 @@ exports.signup = (req, res, next) => {
                 });
                 user.save()
                 .then(() => res.status(201).json({ message: 'Compte créé!' }))
-                .catch(error => res.status(400).json({ error }));
+                .catch(error => res.status(400).json({ message: 'Informations déjà utilisées!' }));
             })
             .catch(error => res.status(500).json({ error })); 
         } else {
@@ -39,9 +38,9 @@ exports.signup = (req, res, next) => {
     }
 };
 
-//Système de connexion
+//Se connecter
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email, username: req.body.username })
+    User.findOne({ email: req.body.email })
         .then(user => {
             if(!user) {
                 return res.status(401).json({ message: 'Une information est incorrect.' });

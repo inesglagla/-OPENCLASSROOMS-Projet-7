@@ -1,10 +1,14 @@
 const express = require('express');
 const app = express();
+const helmet = require("helmet");
+const mongoSanitize = require('express-mongo-sanitize');
 const mongoose = require('mongoose');
 const cors = require ('cors');
 require("dotenv").config();
 
+const postRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 //Connexion à la base de données MongoDB
 mongoose.connect(process.env.MONGODBURL,
@@ -14,6 +18,8 @@ mongoose.connect(process.env.MONGODBURL,
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use(express.json());
+app.use(helmet());
+app.use(mongoSanitize());
 app.use(cors());
 
 //Header permettant d'éviter les erreurs CORS
@@ -25,6 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/images', express.static(path.join(__dirname,'images')));
+app.use('/api/posts', postRoutes);
 app.use('/api/auth', userRoutes);
 
 module.exports = app;

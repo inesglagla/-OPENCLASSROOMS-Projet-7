@@ -14,3 +14,23 @@
 .text-co h1, .text-co h2 {
     color: #4E5166;
 }
+
+@media screen and (max-width: 425px) {
+    .container-co {
+        padding: 0px;
+    }
+
+    .text-co h1, .text-co h2 {
+        font-size: 18px;
+    }
+
+    .g-logo-solo {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .text-co h1, .text-co h2 {
+        font-size: 16px;
+    }
+}
