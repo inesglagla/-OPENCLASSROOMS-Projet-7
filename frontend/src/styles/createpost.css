@@ -1,0 +1,77 @@
+.g-yourpost {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    width: 700px;
+    min-height: 200px;
+    border: 3px solid #4E5166;
+    border-radius: 30px;
+    box-shadow: 0px 10px 31px -7px rgba(0,0,0,0.75);
+}
+
+.g-icontext {
+    width: 650px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.g-youricon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #4E5166;
+}
+
+.post-text {
+    margin: 20px;
+    padding: 10px;
+    width: 600px;
+    height: 100px;
+    border: 2px solid gainsboro;
+}
+
+.post-addnav {
+    width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.post-image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgb(38, 168, 38);
+}
+
+.post-imageicon, .post-videoicon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.post-image p, .post-video p {
+    padding-left: 10px;
+}
+
+.post-video {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgb(218, 17, 141);
+}
+
+.post-button {
+    width: 100px;
+    padding: 10px;
+    margin:10px;
+    color: white;
+    background-color: #FD2D01;
+	border-radius: 4px;
+    font-size: 15px;
+}

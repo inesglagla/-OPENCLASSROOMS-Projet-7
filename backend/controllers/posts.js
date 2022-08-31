@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const fs = require('fs');
 const isAdmin = undefined;
 
 //Afficher tous les posts
@@ -14,12 +15,16 @@ exports.createPost = (req, res, next) => {
     _id: req.params.id,
     userId: req.body.userId,
     post: req.body.post,
-    imageUrl: req.body.imageUrl,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     likes: 0,
     });
+    if (req.body.post == false || req.body.imageUrl == false) {
+      console.log("Il faut écrire un post ou envoyer une image!");
+    } else {
     post.save()
     .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
     .catch(error => res.status(400).json({ error }));
+  }
 };
 
 //Modifier un post
@@ -31,18 +36,31 @@ exports.modifyPost = (req, res, next) => {
         delete postData._userId;
       Post.findOne({_id: req.params.id})
           .then((post) => {
+            //Vérification de l'utilisateur, ou si c'est un admin
             if (user.isAdmin == false || post.userId != req.auth.userId) {
                 res.status(403).json({ message : 'Seul le propriétaire peut modifier son post.'});
             } else {
-            Post.updateOne(
+            //On vérifie si on ne modifie pas l'image
+            if (req.file == undefined) {
+              Post.updateOne(
                 { _id: req.params.id}, 
                 { ...postData, _id: req.params.id}
                 )
               .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
               .catch(error => res.status(401).json({ error }));
-            }})
-          .catch((error) => {res.status(403).json({ error });}
-      );
+            }
+            //Si on modifie l'image
+            fs.unlink(`images/${filename}`, () => {
+              Post.updateOne(
+                { _id: req.params.id}, 
+                { ...postData, _id: req.params.id}
+                )
+              .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
+              .catch(error => res.status(401).json({ error }));
+            })
+          }})
+        .catch((error) => {res.status(403).json({ error });}
+    );
 };
 
 //Supprimer un post

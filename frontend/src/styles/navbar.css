@@ -4,6 +4,10 @@ body {
     background-color: white;
 }
 
+a {
+    text-decoration: none;
+}
+
 .g-banner {
     margin: auto;
     text-align: center;
@@ -23,7 +27,7 @@ body {
 	flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
 }
 
 .g-text {

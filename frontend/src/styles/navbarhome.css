@@ -1,0 +1,42 @@
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.g-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 80px;
+    margin: auto;
+    background-color: #FD2D01;
+    border: 5px solid #4E5166;
+}
+
+.icon-leave {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    color: white;
+}
+
+.g-user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 10px;
+    color:white;
+}
+
+.user-photo {
+    padding-right: 10px;
+}
+
+.user-name {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
