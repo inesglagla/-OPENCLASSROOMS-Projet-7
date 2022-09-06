@@ -1,0 +1,61 @@
+.g-showpost {
+    margin: 10px;
+    width: 675px;
+    min-height: 200px;
+    border-radius: 30px;
+    box-shadow: 0px 10px 31px -7px rgba(0,0,0,0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.g-usericon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 5px;
+    color: #4E5166;
+}
+
+
+.gp-text {
+    margin: 10px;
+    padding: 15px;
+    width: 610px;
+    min-height: 150px;
+    background-color: #fd2b01a9;
+    border-radius: 20px;
+    color:white;
+    font-size:16px;
+
+}
+
+.g-bot-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    border-bottom : 2px solid #4E5166;
+}
+
+.p-comment {
+    padding-right: 490px;
+    font-size: 18px;
+}
+
+.g-likes {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    color: #4E5166;
+}
+
+:hover.g-likes {
+    color:rgb(38, 168, 38);
+}

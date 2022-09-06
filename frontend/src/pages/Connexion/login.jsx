@@ -29,8 +29,9 @@ function Login () {
       password: data.password,
     })
     .then(res => {
-      localStorage.setItem("token", res.data);
-      navigate('/home');
+      localStorage.setItem("token", JSON.stringify(res.data.token));
+      localStorage.setItem("userId", JSON.stringify(res.data.userId))
+      navigate("/home");
     })
     .catch((error)=> {
 			if ( error.response && error.response.status >= 400 && error.response.status <= 500) {

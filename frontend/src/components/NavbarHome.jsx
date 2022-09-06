@@ -7,6 +7,7 @@ import { BiUserCircle } from 'react-icons/bi';
 function NavbarHome() {
     function logOut () {
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
     };
 
     return (
