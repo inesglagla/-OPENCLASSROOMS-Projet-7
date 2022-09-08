@@ -27,6 +27,7 @@ function CreatePost() {
   const bodyFormData = new FormData();
   bodyFormData.append("image", file);
   bodyFormData.append("text", data.post);
+  bodyFormData.append("userId", userId);
 
   function handle(e) {
     const newdata = {...data};
@@ -42,7 +43,7 @@ function CreatePost() {
       data: bodyFormData,
       headers: {
         Authorization: token,
-        'Content-Type': "multipart/form-data"
+        "Content-Type": "multipart/form-data",
     }})
     .then((res) => {
       console.log("C'est fonctionnel!");
