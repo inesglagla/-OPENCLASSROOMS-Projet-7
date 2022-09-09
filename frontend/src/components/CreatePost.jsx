@@ -42,7 +42,7 @@ function CreatePost() {
       {
       data: bodyFormData,
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
     }})
     .then((res) => {

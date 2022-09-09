@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import { useState, useEffect, Fragment } from "react";
 import Comments from './Comments.jsx';
 import '../styles/fonts.css';
@@ -6,34 +6,39 @@ import '../styles/allpost.css';
 import { AiFillLike } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 
-function AllPost() {
+function AllPost(props) {
+    const url = 'http://localhost:3000/api/posts';
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        const token = JSON.parse(localStorage.getItem("token"));
         const fetchData = async () => {
-            const result = await Axios ('http://localhost:3000/api/posts');
-            setData(result.data);
-            console.log("updated");
+            const res = await axios.get (url, {
+                headers: {
+                    Authorization: `Bearer ${token}`}
+            })
+            setData(res.data);
             };
             fetchData();
-            console.log("mounted");
         }, [])
+    
     console.log(data);
 
     return (
-        <Fragment>
+        data.map(item => (
+        <Fragment key= {item._id}>
             <div className='g-showpost'>
                 <div className='g-usericon'>
                     <BiUserCircle size={55}/>
                 </div>
                 <div className="g-picture">
-                    <img className="postpic" src= 'hop' alt= ""/>
+                    <img className="postpic" src={item.imageUrl} alt= ""/>
                 </div>
-                {data.map(item => (
-                    <div className="gp-text" key={item.id}>
+
+                    <div className="gp-text">
                         <p>{item.post}</p>
                     </div>
-                ))}
+
                 <div className="g-bot-bar">
                     <p className="p-comment">Commentaires</p>
                     <div className="g-likes">
@@ -41,7 +46,7 @@ function AllPost() {
                             <AiFillLike size={20}/>
                         </div>
                         <div className="like-number"/>
-                            <p>0</p>
+                            <p>{item.likes}</p>
                     </div>
                 </div>
                 <div className="g-comments">
@@ -49,7 +54,10 @@ function AllPost() {
                 </div>
             </div>
         </Fragment>
+        ))
     )
+    
 }
+
 
 export default AllPost
