@@ -1,14 +1,17 @@
+import { Link } from "react-router-dom";
 import '../styles/navbarhome.css';
 import '../styles/fonts.css';
-import { Link } from "react-router-dom";
 import { BiArrowToLeft } from 'react-icons/bi';
 import { BiUserCircle } from 'react-icons/bi';
 
 function NavbarHome() {
+    //Fonction pour se déconnecter
     function logOut () {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
     };
+
+    //Récupérer le pseudonyme de l'utilisateur
 
     return (
         <div className="g-nav">

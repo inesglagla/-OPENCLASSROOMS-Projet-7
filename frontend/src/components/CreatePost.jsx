@@ -71,8 +71,8 @@ function CreatePost() {
               <div className='post-imageicon'>
                 <BsFillImageFill size={20}/>
               </div>
-              <p>Ajouter une photo</p>
-              <input onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+              <label htmlFor="file">Ajouter une photo</label>
+              <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
             </div>
             <div className='post-video'>
               <div className='post-videoicon'>

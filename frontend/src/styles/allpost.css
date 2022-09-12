@@ -21,6 +21,9 @@
     color: #4E5166;
 }
 
+.g-usericon p {
+    padding-left: 5px;
+}
 
 .gp-text {
     margin: 10px;
@@ -31,7 +34,29 @@
     border-radius: 20px;
     color:white;
     font-size:16px;
+}
 
+.g-top-bar {
+    padding-top: 20px;
+    width: 620px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.g-delete, .g-modify {
+    color: #4E5166;
+}
+
+:hover.g-delete {
+    color:#FD2D01;
+}
+
+:hover.g-modify {
+    color:rgb(218, 17, 141);
 }
 
 .g-bot-bar {
