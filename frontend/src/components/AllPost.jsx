@@ -19,7 +19,8 @@ function AllPost() {
         const fetchData = async () => {
             const res = await axios.get (url, {
                 headers: {
-                    Authorization: `Bearer ${token}`}
+                    Authorization: `Bearer ${token}`,
+                }
             })
             setData(res.data);
             };
@@ -32,7 +33,6 @@ function AllPost() {
         axios.delete(`http://localhost:3000/api/posts/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
             }
         })
         .then((res) => {
@@ -45,32 +45,26 @@ function AllPost() {
     };
 
     //Fonction pour liker un post
-    const userId = JSON.parse(localStorage.getItem("userId"));
-    const dataLike = {
-        userId: userId,
-        like: 1
-    };
-
     function likePost(id, e) {
         e.preventDefault();
-        axios.post(`http://localhost:3000/api/posts/${id}/like`, {
-            data: dataLike,
+        const userId = JSON.parse(localStorage.getItem("userId"));
+        let dataLike = {
+            userId: userId,
+            like: 1
+        };
+        axios.post(`http://localhost:3000/api/posts/${id}/like`, dataLike, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
             }
         })
         .then((res) => {
             console.log(res);
-            console.log('Cest bon!');
+            window.location.reload();
         })
-        .catch((error)=> {
+        .catch((error) => {
             console.log(error);
-            console.log('hello ça ne fonctionne pas');
         });
     };
-
-    //Fonction pour modifier un post
 
     return (
         data.map(item => (
@@ -89,7 +83,7 @@ function AllPost() {
                     <p>Username</p>
                 </div>
                 <div className="g-picture">
-                    <img className="postpic" src={item.imageUrl} alt= ""/>
+                    <img className="postpic" src={item.imageUrl} alt= "photography"/>
                 </div>
                     <div className="gp-text">
                         <p>{item.post}</p>
@@ -110,9 +104,7 @@ function AllPost() {
             </div>
         </Fragment>
         ))
-    )
-    
+    )   
 }
-
 
 export default AllPost

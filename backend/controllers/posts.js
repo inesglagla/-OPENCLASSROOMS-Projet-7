@@ -10,10 +10,9 @@ exports.getAllPost = (req, res, next) => {
 
 //Créer un post
 exports.createPost = (req, res, next) => {
-    let postData = JSON.parse(req.body.post);
-    delete postData._id;
     const post = new Post({
-    ...postData,
+    userId: req.auth.userId,
+    post: req.body.post,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     likes: 0,
     });
@@ -68,7 +67,7 @@ exports.addLikePost = (req, res, next) => {
   //On vérifie si un avis a déjà été donné par l'utilisateur
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (req.body.like > 1) {
-      res.status(400).json({ message: "Vous avez déjà liké ce post."});
+      return res.status(400).json({ message: "Vous avez déjà liké ce post."});
     } else {
     //Aimer le post
     if (req.body.like == 1) {

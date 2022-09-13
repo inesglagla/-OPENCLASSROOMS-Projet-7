@@ -85,3 +85,9 @@
 :hover.g-likes {
     color:rgb(38, 168, 38);
 }
+
+.postpic {
+    padding : 10px;
+    max-width: 500px;
+    max-height: 500px;
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from "react";
 import Axios from "axios";
 import '../styles/fonts.css';
@@ -9,51 +8,39 @@ import { MdOndemandVideo } from 'react-icons/md';
 
 function CreatePost() {
   //Variables
-  const url = 'http://localhost:3000/api/posts';
-  const [file, setFile] = useState();
+  const url = `http://localhost:3000/api/posts`;
   const [error, setError] = useState('');
-  const userId = JSON.parse(localStorage.getItem("userId"));
   const token = JSON.parse(localStorage.getItem("token"));
-  const [data, setData] = useState({
-    userId: userId,
-    post: '',
-    imageUrl: [],
-  });
-  
+
   //Fonction pour l'image
+  const [file, setFile] = useState();
   function handlePic(e) {
     setFile(e.target.files[0]);
   }
-  const bodyFormData = new FormData();
-  bodyFormData.append("image", file);
-  bodyFormData.append("text", data.post);
-  bodyFormData.append("userId", userId);
 
-  function handle(e) {
-    const newdata = {...data};
-    newdata[e.target.id] = e.target.value;
-    setData(newdata);
+  //Fonction pour le contenu
+  const [content, setContent] = useState('');
+  function handleContent(e) {
+    setContent(e.target.value);
   }
 
   //Fonction pour envoyer le post
   function addPost(e) {
     e.preventDefault();
-    Axios.post(url, 
-      {
-      data: bodyFormData,
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    bodyFormData.append("post", content);
+    Axios.post(url, bodyFormData, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
     }})
     .then((res) => {
-      console.log("C'est fonctionnel!");
       console.log(res.data);
+      window.location.reload();
     })
     .catch((error)=> {
       if ( error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
-        console.log(file);
-        console.log(data.post);
       }
     });
   };
@@ -64,7 +51,7 @@ function CreatePost() {
             <div className='g-youricon'>
               <BiUserCircle size={55}/>
             </div>
-            <textarea onChange={(e) => handle(e)} className='post-text' type="text" id="post" name="post" value={data.post}/>
+            <textarea onChange={(e) => handleContent(e)} className='post-text' type="text" id="text" name="text" value={content}/>
           </div>
           <div className='post-addnav'>
             <div className='post-image'>
@@ -82,7 +69,7 @@ function CreatePost() {
             </div>
           </div>
           {error && <div className="error_post">{error}</div>}
-          <button className="post-button" type="submit" onClick={addPost}>Poster</button>
+          <button className="post-button" type="submit" onClick={(e) => addPost(e)}>Poster</button>
       </div>
     )
   }
