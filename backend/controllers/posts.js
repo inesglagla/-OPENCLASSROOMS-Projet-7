@@ -4,8 +4,8 @@ const fs = require('fs');
 //Afficher tous les posts
 exports.getAllPost = (req, res, next) => {
     Post.find()
-    .then ((posts) => {res.status(200).json(posts);})
-    .catch ((error) => {res.status(400).json({ message: error });});
+    .then ((posts) => {res.status(200).json(posts)})
+    .catch ((error) => {res.status(400).json({ message: error })});
 };
 
 //Créer un post
@@ -64,8 +64,9 @@ exports.deletePost = (req, res, next) => {
 
 //Liker un post
 exports.addLikePost = (req, res, next) => {
-  //On vérifie si un avis a déjà été donné par l'utilisateur
-  Post.findOne({ _id: req.params.id }).then((post) => {
+  Post.findOne({ _id: req.params.id })
+  .then((post) => {
+    //On vérifie si un avis a déjà été donné par l'utilisateur
     if (req.body.like > 1) {
       return res.status(400).json({ message: "Vous avez déjà liké ce post."});
     } else {
@@ -98,4 +99,5 @@ exports.addLikePost = (req, res, next) => {
         })
     }}
   })
+  .catch((error) => res.status(500).json({error}));
 };

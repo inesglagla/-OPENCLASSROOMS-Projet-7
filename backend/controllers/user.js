@@ -63,3 +63,17 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+//Retrouver tous les utilisateurs
+exports.getAllUsers = (req, res, next) => {
+    User.find()
+    .then ((users) => {res.status(200).json(users)})
+    .catch ((error) => {res.status(400).json({ message: error })});
+};
+
+//Retrouver un seul utilisateur
+exports.getOneUser = (req, res, next) => {
+    User.findById(req.params.id)
+    .then ((users) => {res.status(200).json(users)})
+    .catch ((error) => {res.status(400).json({ message: error })});
+};
