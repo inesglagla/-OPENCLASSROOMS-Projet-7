@@ -29,7 +29,6 @@ function Login () {
       password: data.password,
     })
     .then(res => {
-      console.log(res);
       localStorage.setItem("token", JSON.stringify(res.data.token));
       localStorage.setItem("userId", JSON.stringify(res.data.userId));
       navigate("/home");

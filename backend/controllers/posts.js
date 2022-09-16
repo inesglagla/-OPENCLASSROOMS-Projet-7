@@ -11,10 +11,10 @@ exports.getAllPost = (req, res, next) => {
 //Créer un post
 exports.createPost = (req, res, next) => {
     const post = new Post({
-    userId: req.auth.userId,
-    post: req.body.post,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    likes: 0,
+      userId: req.auth.userId,
+      post: req.body.post,
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+      likes: 0,
     });
     post.save()
     .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
@@ -24,31 +24,32 @@ exports.createPost = (req, res, next) => {
 //Modifier un post
 exports.modifyPost = (req, res, next) => {
     const postData = req.file ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : { ...req.body };
-        delete postData._userId;
+      ...JSON.parse(req.body.post),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : { ...req.body };
+      delete postData._userId;
       Post.findOne({_id: req.params.id})
-          .then((post) => {
-            //On vérifie si on ne modifie pas l'image
-            if (req.file == undefined) {
-              Post.updateOne(
-                { _id: req.params.id}, 
-                { ...postData, _id: req.params.id}
-                )
-              .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-              .catch(error => res.status(401).json({ error }));
-            }
-            //Si on modifie l'image
-            fs.unlink(`images/${filename}`, () => {
-              Post.updateOne(
-                { _id: req.params.id}, 
-                { ...postData, _id: req.params.id}
-                )
-              .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-              .catch(error => res.status(401).json({ error }));
-            })
+        .then((post) => {
+          //On vérifie si on ne modifie pas l'image
+          if (req.file == undefined) {
+            Post.updateOne(
+              { _id: req.params.id}, 
+              { ...postData, _id: req.params.id}
+              )
+            .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
+            .catch(error => res.status(401).json({ error }));
+          } else {
+          //Si on modifie l'image
+          fs.unlink(`images/${filename}`, () => {
+            Post.updateOne(
+              { _id: req.params.id}, 
+              { ...postData, _id: req.params.id}
+              )
+            .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
+            .catch(error => res.status(401).json({ error }));
           })
-        .catch((error) => {res.status(403).json({ error })});
+        }
+      })
+      .catch((error) => {res.status(403).json({ error })});
 };
 
 //Supprimer un post
@@ -71,7 +72,7 @@ exports.addLikePost = (req, res, next) => {
       return res.status(400).json({ message: "Vous avez déjà liké ce post."});
     } else {
     //Aimer le post
-    if (req.body.like == 1) {
+    if (req.body.like === 1) {
         Post.findOneAndUpdate(
           { _id: req.params.id },
           {

@@ -1,0 +1,79 @@
+.coms-bloc {
+    width: 650px;
+    min-height: 200px;
+    border-radius: 30px;
+    padding-bottom: 10px;
+}
+
+.coms-all {
+    width: 650px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.coms-create {
+    margin-top: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border: 2px solid black;
+}
+
+.coms-one {
+    background-color: #fd2b01a9;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 600px;
+    min-height: 170px;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 10px 31px -7px rgb(0 0 0 / 75%);
+}
+
+.coms-top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 40px;
+    padding-left: 80px;
+}
+
+.coms-username {
+    margin: 0px;
+    margin-top: 5px;
+    padding: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+}
+
+.coms-bot {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.coms-usericon {
+    color:white;
+    padding: 10px;
+}
+
+.coms-text {
+    width: 500px;
+    min-height: 100px;
+    background-color: white;
+    border: 2px dotted #FD2D01;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.coms-content {
+    padding: 10px;
+}

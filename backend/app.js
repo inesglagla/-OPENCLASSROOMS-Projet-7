@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const postRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comments');
 const path = require('path');
 
 //Connexion à la base de données MongoDB
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname,'images')));
 app.use('/api/posts', postRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/comments', commentRoutes);
 
 module.exports = app;

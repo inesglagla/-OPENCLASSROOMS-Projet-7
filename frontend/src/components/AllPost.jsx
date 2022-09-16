@@ -7,6 +7,7 @@ import { AiFillLike } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { RiPencilLine } from 'react-icons/ri';
+import { MdOutlineFormatAlignRight } from 'react-icons/md';
 
 function AllPost() {
     //Fonction pour afficher l'entièreté des posts
@@ -66,28 +67,43 @@ function AllPost() {
         });
     };
 
+    //Menu pour supprimer ou modifier un poste
+    const [open, setOpen] = useState(false);
+
+    const [show, setShow] = useState(true);
+
     return (
         data.map(item => (
         <Fragment key= {item._id}>
-            <div className='g-showpost'>
+            <div className="g-showpost">
                 <div className="g-top-bar">
-                    <div className="g-delete" onClick={(e) => deletePost(item._id, e)}>
-                        <RiDeleteBin6Line size={30}/>
+                    <div className="g-nav-md" onClick= {()=> setOpen(!open)}>
+                        <div className="g-align">
+                            <MdOutlineFormatAlignRight size={30}/>
+                        </div>
+                        <div className={`g-dm-icons ${open? 'active' : 'inactive'}`}>
+                            <div className="g-delete" onClick={(e) => deletePost(item._id, e)}>
+                                <RiDeleteBin6Line size={25}/>
+                                <p>Supprimer</p>
+                            </div>
+                            <div className="g-modify" onClick={() => setShow(true)}>
+                                <RiPencilLine size={25}/>
+                                <p>Modifier</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="g-modify">
-                        <RiPencilLine size={30}/>
-                    </div>
-                </div>
-                <div className='g-usericon'>
-                    <BiUserCircle size={55}/>
-                    <p>Username</p>
                 </div>
                 <div className="g-picture">
                     <img className="postpic" src={item.imageUrl} alt= "photography"/>
                 </div>
+                <div className="g-contentuser">
+                    <div className='g-usericon'>
+                        <BiUserCircle size={55}/>
+                    </div>
                     <div className="gp-text">
                         <p>{item.post}</p>
                     </div>
+                </div>
                 <div className="g-bot-bar">
                     <p className="p-comment">Commentaires</p>
                     <div className="g-likes">

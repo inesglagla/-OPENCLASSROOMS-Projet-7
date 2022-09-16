@@ -45,33 +45,33 @@ function CreatePost() {
     });
   };
 
-    return (
-        <div className='g-yourpost'>
-          <div className='g-icontext'>
-            <div className='g-youricon'>
-              <BiUserCircle size={55}/>
-            </div>
-            <textarea onChange={(e) => handleContent(e)} className='post-text' type="text" id="text" name="text" value={content}/>
+  return (
+      <div className='g-yourpost'>
+        <div className='g-icontext'>
+          <div className='g-youricon'>
+            <BiUserCircle size={55}/>
           </div>
-          <div className='post-addnav'>
-            <div className='post-image'>
-              <div className='post-imageicon'>
-                <BsFillImageFill size={20}/>
-              </div>
-              <label htmlFor="file">Ajouter une photo</label>
-              <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+          <textarea onChange={(e) => handleContent(e)} className='post-text' type="text" id="text" name="text" value={content}/>
+        </div>
+        <div className='post-addnav'>
+          <div className='post-image'>
+            <div className='post-imageicon'>
+              <BsFillImageFill size={20}/>
             </div>
-            <div className='post-video'>
-              <div className='post-videoicon'>
-                <MdOndemandVideo size={20}/>
-              </div>
-              <p>Ajouter une vidéo</p>
-            </div>
+            <label htmlFor="file">Ajouter une photo</label>
+            <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
           </div>
-          {error && <div className="error_post">{error}</div>}
-          <button className="post-button" type="submit" onClick={(e) => addPost(e)}>Poster</button>
-      </div>
-    )
-  }
+          <div className='post-video'>
+            <div className='post-videoicon'>
+              <MdOndemandVideo size={20}/>
+            </div>
+            <p>Ajouter une vidéo</p>
+          </div>
+        </div>
+        {error && <div className="error_post">{error}</div>}
+        <button className="post-button" type="submit" onClick={(e) => addPost(e)}>Poster</button>
+    </div>
+  )
+}
 
 export default CreatePost

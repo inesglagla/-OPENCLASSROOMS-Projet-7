@@ -9,6 +9,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 30px;
+    padding-bottom: 15px;
 }
 
 .g-usericon {
@@ -28,35 +29,12 @@
 .gp-text {
     margin: 10px;
     padding: 15px;
-    width: 610px;
+    width: 550px;
     min-height: 150px;
     background-color: #fd2b01a9;
     border-radius: 20px;
     color:white;
     font-size:16px;
-}
-
-.g-top-bar {
-    padding-top: 20px;
-    width: 620px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    border-radius: 20px;
-}
-
-.g-delete, .g-modify {
-    color: #4E5166;
-}
-
-:hover.g-delete {
-    color:#FD2D01;
-}
-
-:hover.g-modify {
-    color:rgb(218, 17, 141);
 }
 
 .g-bot-bar {
@@ -84,10 +62,77 @@
 
 :hover.g-likes {
     color:rgb(38, 168, 38);
+    cursor: pointer;
 }
 
 .postpic {
     padding : 10px;
     max-width: 500px;
     max-height: 500px;
+}
+
+.g-contentuser {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.g-top-bar {
+    padding-top: 10px;
+    width: 620px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.g-delete, .g-modify {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+:hover.g-delete {
+    color:#FD2D01;
+}
+
+:hover.g-modify {
+    color:rgb(218, 17, 141);
+}
+
+.g-dm-icons.active {
+    opacity: 1;
+    visibility: visible;
+    color: white;
+    background-color: #4e516673;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 130px;
+}
+
+.g-dm-icons.inactive {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.g-align {
+    color: #4E5166;
+}
+
+.g-nav-md {
+    position: relative;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 130px;
+    height: 50px;
+    cursor: pointer;
 }

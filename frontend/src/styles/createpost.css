@@ -47,6 +47,7 @@
     flex-direction: row;
     align-items: center;
     color: rgb(38, 168, 38);
+    cursor: pointer;
 }
 
 .post-imageicon, .post-videoicon {
@@ -74,6 +75,7 @@
     background-color: #FD2D01;
 	border-radius: 4px;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .error_post {
