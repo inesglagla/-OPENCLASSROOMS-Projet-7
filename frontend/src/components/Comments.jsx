@@ -27,10 +27,12 @@ function Comments() {
         <div className="coms-bloc">
             <div className="coms-create">
                 <div className="create-block">
-                    <div className="create-youricon">
-                        <BiUserCircle size={55}/>
+                    <div className="create-icontext">
+                        <div className="create-youricon">
+                            <BiUserCircle size={55}/>
+                        </div>
+                        <textarea className="create-text"/>
                     </div>
-                    <textarea className="create-text"/>
                     <button className="create-button">Envoyer</button>
                 </div>
             </div>
