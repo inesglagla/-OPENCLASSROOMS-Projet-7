@@ -66,38 +66,33 @@ exports.deletePost = (req, res, next) => {
 //Liker un post
 exports.addLikePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
-  .then((post) => {
+  .then((result) => {
     //On vérifie si un avis a déjà été donné par l'utilisateur
     if (req.body.like > 1) {
       return res.status(400).json({ message: "Vous avez déjà liké ce post."});
     } else {
     //Aimer le post
-    if (req.body.like === 1) {
-        Post.findOneAndUpdate(
-          { _id: req.params.id },
-          {
-            $inc: { likes: 1 },
-            $push: { usersLiked: req.body.userId },
-          }
+    if (result.usersLiked.includes(req.body.userId)) {
+      Post.findOneAndUpdate(
+        { _id: req.params.id },
+        { 
+          $inc: { likes: -1 }, 
+          $pull: { usersLiked: req.body.userId },
+        }
         )
-        .then(() => res.status(200).json({ message: 'La post a été liké!' }))
+        .then(() => res.status(200).json({ message: "Le like a été retiré!" }))
         .catch((error) => res.status(400).json({ error }));
     //Retirer le like
     } else {
-      Post.findOne({ _id: req.params.id })
-      .then((result) => {
-        if (result.usersLiked.includes(req.body.userId)) {
-            Post.findOneAndUpdate(
-              { _id: req.params.id },
-              { 
-                $inc: { likes: -1 }, 
-                $pull: { usersLiked: req.body.userId },
-              }
-              )
-              .then(() => res.status(200).json({ message: "Le like a été retiré!" }))
-              .catch((error) => res.status(400).json({ error }));
-            }
-        })
+      Post.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $inc: { likes: 1 },
+          $push: { usersLiked: req.body.userId },
+        }
+      )
+      .then(() => res.status(200).json({ message: 'La post a été liké!' }))
+      .catch((error) => res.status(400).json({ error }));
     }}
   })
   .catch((error) => res.status(500).json({error}));
