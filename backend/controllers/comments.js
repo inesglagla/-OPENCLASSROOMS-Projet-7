@@ -10,7 +10,8 @@ exports.getAllComment = (req, res, next) => {
 //Ajouter un commentaire
 exports.createComment = (req, res, next) => {
     const comment = new Comment({
-
+        userId: req.auth.userId,
+        comment: req.body.comment,
     });
     console.log(req.body.comment);
     comment.save()

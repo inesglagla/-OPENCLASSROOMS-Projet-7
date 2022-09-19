@@ -29,6 +29,9 @@ exports.modifyPost = (req, res, next) => {
       delete postData._userId;
       Post.findOne({_id: req.params.id})
         .then((post) => {
+          if (post.userId != req.auth.userId) {
+            res.status(403).json({ message : 'Seul le propriétaire peut modifier son post.'});
+          } else {
           //On vérifie si on ne modifie pas l'image
           if (req.file == undefined) {
             Post.updateOne(
@@ -47,7 +50,7 @@ exports.modifyPost = (req, res, next) => {
             .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
             .catch(error => res.status(401).json({ error }));
           })
-        }
+        }}
       })
       .catch((error) => {res.status(403).json({ error })});
 };
@@ -56,11 +59,15 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
         .then((post) => {
+          if (post.userId != req.auth.userId) {
+            res.status(403).json({ message : 'Seul le propriétaire peut supprimer son post.'});
+          } else {
             Post.deleteOne({ _id: req.params.id })
             .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-            .catch(error => res.status(400).json({ error }));
+            .catch((error) => res.status(400).json({ error }));
+          }
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch((error) => res.status(500).json({ error }));
 };
 
 //Liker un post
