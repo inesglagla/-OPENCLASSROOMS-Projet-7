@@ -1,8 +1,9 @@
 import React from "react";
+import Navbar from "../../components/Navbar";
 import '../../styles/fonts.css';
 import '../../styles/connexion.css';
 import logo from '../../assets/logo-solo.png';
-import Navbar from "../../components/Navbar";
+
 
 function Connexion() {
     return (

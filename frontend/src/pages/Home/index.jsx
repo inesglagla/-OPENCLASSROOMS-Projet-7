@@ -1,10 +1,10 @@
-import '../../styles/fonts.css';
-import '../../styles/home.css';
-import logo from '../../assets/logo-g.png';
 import NavbarHome from "../../components/NavbarHome";
 import CreatePost from "../../components/CreatePost";
 import AllPost from "../../components/AllPost";
 import Footer from "../../components/Footer";
+import '../../styles/fonts.css';
+import '../../styles/home.css';
+import logo from '../../assets/logo-g.png';
 
 function Home() {
     return (

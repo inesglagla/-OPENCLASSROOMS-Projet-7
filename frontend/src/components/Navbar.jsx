@@ -1,7 +1,8 @@
-import '../styles/navbar.css';
-import logo from '../assets/logo-w.png';
-import '../styles/fonts.css';
 import { Link } from "react-router-dom";
+import '../styles/navbar.css';
+import '../styles/fonts.css';
+import logo from '../assets/logo-w.png';
+
 
 function Navbar() {
     return (
