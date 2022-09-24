@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment');
+const Post = require('../models/Post');
 
 //Afficher tous les commentaires
 exports.getAllComment = (req, res, next) => {
@@ -9,13 +10,19 @@ exports.getAllComment = (req, res, next) => {
 
 //Ajouter un commentaire
 exports.createComment = (req, res, next) => {
+    Post.findOneAndUpdate(
+        { _id: req.params.id },
+        { 
+          $pull: { comments: req.body._id },
+        }
+    )
     const comment = new Comment({
         userId: req.auth.userId,
-        comment: req.body.comment,
+        postId: req.body.postId,
+        content: req.body.content,
     });
-    console.log(req.body.comment);
     comment.save()
-    .then(() => res.status(201).json({ message: 'Commentaire ajouté!'}))
+    .then((comment) => res.status(201).json({ message: 'Commentaire ajouté!'}))
     .catch((error) => res.status(400).json({ error }));
 };
 

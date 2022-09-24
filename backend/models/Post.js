@@ -6,6 +6,7 @@ const postSchema = mongoose.Schema({
   imageUrl: {type: String, required: true},
   likes: {type: Number, default: 0},
   usersLiked: {type: [String]},
+  comments: {type: [String]},
 });
 
 module.exports = mongoose.model('Post', postSchema);

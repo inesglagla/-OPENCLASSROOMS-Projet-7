@@ -1,91 +1,68 @@
+import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { RiCloseCircleLine } from 'react-icons/ri';
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import NavbarHome from "../components/NavbarHome";
+import '../styles/fonts.css';
+import '../styles/modifypost.css';
+import '../styles/createpost.css';
 
 function ModifyPost() {
-    //Fonction pour récupérer les données des posts
-    const url = 'http://localhost:3000/api/posts';
-    const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+    let { id } = useParams();
 
-    useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("token"));
-        const fetchData = async () => {
-            const res = await axios.get (url, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-            setData(res.data);
-            };
-            fetchData();
-        }, [])
+    //Fonction pour l'image
+    const [file, setFile] = useState();
+    function handlePic(e) {
+        setFile(e.target.files[0]);
+    }
+
+    //Fonction pour le contenu
+    const [contentText, setContentText] = useState('');
+    function handleContent(e) {
+        setContentText(e.target.value);
+    }
 
     //Fonction pour modifier un post
-
+    function modifyPost (e) {
+        e.preventDefault();
+        const token = JSON.parse(localStorage.getItem("token"));
+        const modifyFormData = new FormData();
+        modifyFormData.append("image", file);
+        modifyFormData.append("post", contentText);
+        axios.put(`http://localhost:3000/api/posts/${id}`, modifyFormData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            navigate(`/home`);
+        })
+        .catch((error)=> {
+            setError(error);
+        });
+    };
+    
     return (
-        <div className="bloc-modify">
-        <div className="mb-content">
-            <div className="m-annuler">
-                <RiCloseCircleLine size={40} />
+        <div>
+            <NavbarHome />
+            <div className="modify-bloc">
+                <div className="modify-bloc-int">
+                    <textarea className="modify-text" onChange={(e) => handleContent(e)} type="text" id="text" name="text" value={contentText}/>
+                    <div className="modify-actions">
+                        <div className="modify-image">
+                            <label htmlFor="file">Changer l'image</label>
+                            <input className="modify-buttonpic" onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+                        </div>
+                        <button className="modify-send" onClick={(e) => modifyPost(e)}>Envoyer</button>
+                    </div>
+                </div>
+                {error && <div className="error_post">{error}</div>}
             </div>
-            <div className="m-showcontent">
-                <textarea className='m-text' type="text" id="text" name="text"/>
-            </div>
-            <div className="mb-picture">
-                <p className="m-changepicture">Changer ou charger une image?</p>
-            </div>
-            <button className="m-button">Envoyer</button>
         </div>
-   </div>
     )
 }
 
 export default ModifyPost
-
-/*
-.bloc-modify {
-    position: absolute;
-    background-color: #4e5166e3;
-    width: 600px;
-    min-height: 300px;
-    border: 2px solid black;
-    border-radius: 10px;
-}
-
-.m-annuler {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    color: white;
-    padding: 10px;
-}
-
-.m-text {
-    margin-left: 45px;
-    margin-right: 45px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 100px;
-    border: 1px solid black;
-}
-
-.m-changepicture {
-    padding: 10px;
-    text-align: center;
-    color: white;
-}
-
-.m-button {
-    width: 100px;
-    padding: 10px;
-    margin:10px;
-    color: white;
-    background-color: #FD2D01;
-	border-radius: 4px;
-    font-size: 15px;
-}
-*/

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import '../styles/fonts.css';
 import '../styles/comments.css';
 import { BiUserCircle } from 'react-icons/bi';
@@ -7,7 +7,7 @@ import { GiTalk } from 'react-icons/gi';
 
 function Comments() {
     //Récupérer le pseudonyme de l'utilisateur
-    const [userData, setUserData] = useState([]);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         const userId = JSON.parse(localStorage.getItem('userId'));
@@ -18,7 +18,7 @@ function Comments() {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            setUserData([res.data]);
+            setUsername(res.data.username);
             };
             fetchUserData();
         }, [])
@@ -39,11 +39,7 @@ function Comments() {
             <div className="coms-all">
                 <div className="coms-one">
                     <div className='coms-top'>
-                        {userData.map((item) => (
-                            <Fragment key= {item._id}>
-                                <p className="coms-username"><GiTalk size={20}/>{item.username}</p>
-                            </Fragment>
-                        ))}
+                        <p className="coms-username"><GiTalk size={20}/>{username}</p>
                     </div>
                     <div className="coms-bot">
                         <div className="coms-usericon">
