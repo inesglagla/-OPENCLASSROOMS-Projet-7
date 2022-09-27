@@ -29,7 +29,7 @@ function CreatePost() {
     e.preventDefault();
     const bodyFormData = new FormData();
     bodyFormData.append("image", file);
-    bodyFormData.append("post", content);
+    bodyFormData.append("content", content);
     Axios.post(url, bodyFormData, {
       headers: {
         Authorization: `Bearer ${token}`,

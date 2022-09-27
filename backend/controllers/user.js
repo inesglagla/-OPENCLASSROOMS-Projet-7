@@ -78,3 +78,8 @@ exports.getOneUser = (req, res, next) => {
     .then ((users) => {res.status(200).json(users)})
     .catch ((error) => {res.status(400).json({ message: error })});
 };
+
+//Changer l'image de profil
+exports.putProfilePicture = (req, res, next) => {
+    
+};

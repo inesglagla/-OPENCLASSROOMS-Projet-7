@@ -30,7 +30,7 @@ function ModifyPost() {
         const token = JSON.parse(localStorage.getItem("token"));
         const modifyFormData = new FormData();
         modifyFormData.append("image", file);
-        modifyFormData.append("post", contentText);
+        modifyFormData.append("content", contentText);
         axios.put(`http://localhost:3000/api/posts/${id}`, modifyFormData, {
             headers: {
                 Authorization: `Bearer ${token}`,

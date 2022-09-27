@@ -8,7 +8,6 @@ import { AiFillLike } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 
 function AllPost() {
-    const url = 'http://localhost:3000/api/posts';
     const token = JSON.parse(localStorage.getItem("token"));
     const [content, setContent] = useState([]);
     
@@ -16,12 +15,13 @@ function AllPost() {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem("token"));
         const fetchDataContent = async () => {
-            const res = await axios.get (url, {
+            const res = await axios.get (`http://localhost:3000/api/posts`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
             setContent(res.data);
+            console.table(res.data);
             };
             fetchDataContent();
         }, [])
@@ -48,16 +48,30 @@ function AllPost() {
         });
     };
 
-    useEffect(() => {
+    //Faire apparaître le composant pour modifier/supprimer un post qui appartient à l'utilisateur
+    let userIdPost = content.userId;
+    console.log(userIdPost);
 
-    });
+    let navUser = undefined;
+    useEffect(() => {
+        const userId = JSON.parse(localStorage.getItem("userId"));
+        let userValid = Boolean;
+        if (userIdPost === userId) {
+            let userValid = true;
+        } else {
+            let userValid = false;
+        }
+        if (userValid) {
+            let navUser = <ActionsPost />;
+        }
+    })
 
     return (
         content.map(post => (
         <Fragment key= {post._id}>
             <div className="g-showpost">
                 <div className="g-top-bar">
-                    <ActionsPost />
+                    <ActionsPost postId={post._id}/>
                 </div>
                 <div className="g-picture">
                     <img className="postpic" src={post.imageUrl} alt= "photography"/>
@@ -67,7 +81,7 @@ function AllPost() {
                         <BiUserCircle size={55}/>
                     </div>
                     <div className="gp-text">
-                        <p>{post.post}</p>
+                        <p>{post.content}</p>
                     </div>
                 </div>
                 <div className="g-bot-bar">

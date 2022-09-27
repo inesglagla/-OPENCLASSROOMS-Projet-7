@@ -21,20 +21,24 @@ exports.getOnePost = (req, res, next) => {
 exports.createPost = (req, res, next) => {
     const post = new Post({
       userId: req.auth.userId,
-      post: req.body.post,
+      content: req.body.content,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
       likes: 0,
     });
-    post.save()
-    .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
-    .catch(error => res.status(400).json({ error }));
+    if (req.body.content || req.file.filename) {
+      post.save()
+      .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
+      .catch(error => res.status(400).json({ error }));
+    } else {
+      res.status(403).json({ message : 'Il faut envoyer une image ou un texte.'});
+    }
 };
 
 //Modifier un post
 exports.modifyPost = (req, res, next) => {
     const postData = req.file ? {
       userId: req.auth.userId,
-      post: req.body.post,
+      content: req.body.content,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,} : { ...req.body };
       delete postData._userId;
       Post.findOne({_id: req.params.id})
@@ -121,7 +125,7 @@ exports.addLikePost = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
       }
     } else {
-      return res.status(400).json({ message: "Les lettres ne sont pas acceptées pour un nombre."});
+      return res.status(400).json({ message: "Les lettres ne sont pas acceptées."});
     }
 }
   })
