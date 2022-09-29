@@ -13,24 +13,37 @@ exports.getOnePost = (req, res, next) => {
   Post.findOne ({
     _id: req.params.id
   })
-  .then((sauce) => res.status(200).json(sauce))
+  .then((post) => res.status(200).json(post))
   .catch((error) => res.status(400).json({ error }));
 };
 
 //Créer un post
 exports.createPost = (req, res, next) => {
-    const post = new Post({
-      userId: req.auth.userId,
-      content: req.body.content,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      likes: 0,
-    });
-    if (req.body.content || req.file.filename) {
+    //On vérifie si on envoie une image, si ce n'est pas le cas :
+    if (req.file === undefined) {
+      const post = new Post({
+        userId: req.auth.userId,
+        content: req.body.content,
+        likes: 0,
+      });
+      if (req.body.content) {
+        post.save()
+        .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
+        .catch(error => res.status(400).json({ error }));
+      } else {
+        res.status(403).json({ message : 'Il faut envoyer une image ou un texte.'});
+      }
+    //Si on envoie une image :
+    } else {
+      const post = new Post({
+        userId: req.auth.userId,
+        content: req.body.content,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        likes: 0,
+      });
       post.save()
       .then((post) => res.status(201).json({ message: 'Le post a été ajouté!'}))
       .catch(error => res.status(400).json({ error }));
-    } else {
-      res.status(403).json({ message : 'Il faut envoyer une image ou un texte.'});
     }
 };
 

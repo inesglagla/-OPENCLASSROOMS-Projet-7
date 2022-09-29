@@ -12,24 +12,25 @@ exports.getAllComment = (req, res, next) => {
 exports.createComment = (req, res, next) => {
     Post.findOne({ postId: req.params.id })
     .then((result) => {
-        if (result.id === req.params.postId) {
-            const comment = new Comment({
-                userId: req.auth.userId,
-                postId: req.params.postId,
-                content: req.body.content,
+            console.log(result);
+            if (result.id === req.params.postId) {
+                const comment = new Comment({
+                    userId: req.auth.userId,
+                    postId: req.params.postId,
+                    content: req.body.content,
 
-            });
-            comment.save()
-            Post.findOneAndUpdate(
-                {postId: req.params.id},
-                {$push: { comments: comment }}
-            )
-            .then(() => res.status(201).json({ message: 'Commentaire ajouté!'}))
-            .catch((error) => res.status(400).json({ error }));
-        } else {
-            res.status(400).json({ message: "Cette publication n'existe pas." });
-        }
-    })
+                });
+                comment.save()
+                Post.findOneAndUpdate(
+                    { postId: req.params.id },
+                    { $push: { comments: comment } }
+                )
+                .then(() => res.status(201).json({ message: 'Commentaire ajouté!'}))
+                .catch((error) => res.status(400).json({ error }));
+            } else {
+                res.status(400).json({ message: "Cette publication n'existe pas." });
+            }
+        })
     .catch((error) => res.status(500).json({ error }));
 };
 

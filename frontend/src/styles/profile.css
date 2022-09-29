@@ -34,13 +34,21 @@
     color: #FD2D01;
 }
 
-.profile-username {
+.profile-user p {
     width: 295px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.profile-username {
     font-size: 20px;
+}
+
+.profile-email {
+    font-size: 18px;
+    gap: 5px;
 }
 
 .profile-options {
@@ -51,4 +59,40 @@
     border-radius: 10px;
     border: 3px solid #4E5166;
     box-shadow: 0px 10px 31px -7px rgba(0,0,0,0.75);
+}
+
+.profile-title {
+    margin: auto;
+    padding: 20px 20px 20px 20px;
+    font-size: 22px;
+    border-bottom:  3px dotted #4E5166;
+    text-align: center;
+}
+
+.profile-infos {
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 500px;
+    height: 530px;
+    text-align: center;
+}
+
+.profile-infos p {
+    padding: 5px;
+    font-size: 18px;
+    border: 2px solid #4E5166;
+    border-radius: 10px;
+    background-color: #fd2b01a9;
+    color:white;
+}
+
+.profile-birthday, .profile-adress, .profile-number, 
+.profile-job, .profile-join, .profile-role {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
