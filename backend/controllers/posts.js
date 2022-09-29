@@ -100,21 +100,16 @@ exports.deletePost = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-//Validité des likes
-likesValidity = (likes) => {
-  return /[0-9]/.test(likes);
-}
-
 //Liker un post
 exports.addLikePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
   .then((result) => {
     //On vérifie si un avis a déjà été donné par l'utilisateur
-    if (req.body.likes > 1) {
+    if (req.body.likes != 1) {
       return res.status(400).json({ message: "Vous ne pouvez liké le post qu'une seule fois."});
-    } else {
-    //Aimer le post
-    if (likesValidity(req.body.likes)) {
+    //On vérifie si l'utilisateur existe
+    } else if (req.body.userId === req.auth.userId) {
+      //Aimer le post
       if (result.usersLiked.includes(req.body.userId)) {
         Post.findOneAndUpdate(
           { _id: req.params.id },
@@ -138,9 +133,8 @@ exports.addLikePost = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
       }
     } else {
-      return res.status(400).json({ message: "Les lettres ne sont pas acceptées."});
+      return res.status(400).json({ message: "Vous devez être connecté pour liker."});
     }
-}
-  })
+    })
   .catch((error) => res.status(500).json({error}));
 };
