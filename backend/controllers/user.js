@@ -24,7 +24,13 @@ exports.signup = (req, res, next) => {
                     email: req.body.email,
                     password: hash,
                     username: req.body.username,
+                    picture: null,
                     isAdmin : false,
+                    birthday: req.body.birthday,
+                    adress: req.body.adress,
+                    phone: req.body.phone,
+                    job: req.body.job,
+                    jobdate: req.body.jobdate,
                 });
                 user.save()
                 .then(() => res.status(201).json({ message: 'Compte créé!' }))
@@ -81,5 +87,22 @@ exports.getOneUser = (req, res, next) => {
 
 //Changer l'image de profil
 exports.putProfilePicture = (req, res, next) => {
-    
+    const userData = req.file ? {
+        userId: req.auth.userId,
+        picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,} : { ...req.body };
+    delete userData._userId;
+    User.findOne({_id: req.params.id})
+        .then((user) => {
+        if (user.id != req.auth.userId) {
+            res.status(403).json({ message : 'Seul le propriétaire peut modifier son avatar.'});
+        } else {
+            User.updateOne(
+            { _id: req.params.id}, 
+            { ...userData, _id: req.params.id}
+            )
+            .then(() => res.status(200).json({ message : "Votre avatar a été changé."}))
+            .catch(error => res.status(401).json({ error }));
+        }
+    })
+    .catch((error) => {res.status(403).json({ error })});
 };
