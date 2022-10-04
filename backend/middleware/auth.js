@@ -10,7 +10,17 @@ module.exports = (req, res, next) => {
         req.auth = {
             userId: userId
         };
-        next();
+        const isAdmin = decodedToken.isAdmin;
+        if (userId !== req.auth.userId) {
+            if (isAdmin !== true) {
+                res.status(401).json({ message: "Vous n'êtes pas un administrateur." });
+            } else {
+                next();
+            }
+            res.status(401).json({ message: "Vous n'avez pas l'autorisation." });
+        } else {
+            next();
+        }
     } catch(error) {
          res.status(401).json({ message: "Vous n'avez pas l'autorisation." });
     }
