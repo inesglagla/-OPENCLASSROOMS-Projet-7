@@ -85,26 +85,26 @@ exports.modifyPost = (req, res, next) => {
 
 //Supprimer un post
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-      .then((post) => {
-        if (post.userId != req.auth.userId) {
-          res.status(403).json({ message : 'Seul le propriétaire peut supprimer son post.'});
+  Post.findOne({ _id: req.params.id })
+    .then((post) => {
+      if (post.userId != req.auth.userId) {
+        res.status(403).json({ message : 'Seul le propriétaire peut supprimer son post.'});
+      } else {
+        if (req.file == undefined) {
+          Post.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
+          .catch((error) => res.status(400).json({ error }));
         } else {
-          if (req.file == undefined) {
-            Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-            .catch((error) => res.status(400).json({ error }));
-          } else {
-            const filename = post.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-            .catch((error) => res.status(400).json({ error }));
-            })
-          }
+          const filename = post.imageUrl.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => {
+          Post.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
+          .catch((error) => res.status(400).json({ error }));
+          })
         }
-      })
-      .catch((error) => res.status(500).json({ error }));
+      }
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
 
 //Liker un post

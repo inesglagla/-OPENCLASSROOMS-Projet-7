@@ -1,13 +1,15 @@
 import axios from "axios";
+import moment from 'moment';
+import 'moment/locale/fr';
 import { useState, useEffect, Fragment } from "react";
 import Comments from './Comments.jsx';
-import ActionsPost from './ActionsPost.jsx';
+import AuthBar from './AuthBar.jsx';
+import AvatarId from "./AvatarId.jsx";
 import '../styles/fonts.css';
 import '../styles/allpost.css';
 import { AiFillLike } from 'react-icons/ai';
-import { BiUserCircle } from 'react-icons/bi';
 
-function AllPost() {
+function AllPost({userPic}) {
     const token = JSON.parse(localStorage.getItem("token"));
     const [content, setContent] = useState([]);
     
@@ -21,10 +23,9 @@ function AllPost() {
                 }
             })
             setContent(res.data);
-            console.table(res.data);
             };
-            fetchDataContent();
-        }, [])
+        fetchDataContent();
+    }, [])
 
     //Fonction pour liker un post
     function likePost(id, e) {
@@ -32,7 +33,7 @@ function AllPost() {
         const userId = JSON.parse(localStorage.getItem("userId"));
         let dataLike = {
             userId: userId,
-            like: 1
+            likes: 1
         };
         axios.post(`http://localhost:3000/api/posts/${id}/like`, dataLike, {
             headers: {
@@ -48,42 +49,46 @@ function AllPost() {
         });
     };
 
-    //Faire apparaître le composant pour modifier/supprimer un post qui appartient à l'utilisateur
-    let userIdPost = content.userId;
-    console.log(userIdPost);
+    moment.locale('fr')
+    const date = moment().fromNow();
+    /*
+    const jsonObj = {
+        momentObj: date
+    };
+    console.log(JSON.stringify(jsonObj));
+    */
 
-    let navUser = undefined;
-    useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem("userId"));
-        let userValid = Boolean;
-        if (userIdPost === userId) {
-            let userValid = true;
+
+    const isThereImage = Boolean;
+    /*
+    const checkPic = async () => {
+        if (imageUrl !== undefined) {
+            return isThereImage = true;
         } else {
-            let userValid = false;
-        }
-        if (userValid) {
-            let navUser = <ActionsPost />;
-        }
-    })
+            return isThereImage = false;
+        }  
+    }
+    */
 
     return (
         content.map(post => (
         <Fragment key= {post._id}>
             <div className="g-showpost">
                 <div className="g-top-bar">
-                    <ActionsPost postId={post._id}/>
+                    <AuthBar postId={post._id}/>
                 </div>
-                <div className="g-picture">
+                <div className={`g-picture ${isThereImage? 'undefined' : 'true'}`}>
                     <img className="postpic" src={post.imageUrl} alt= "photography"/>
                 </div>
                 <div className="g-contentuser">
                     <div className='g-usericon'>
-                        <BiUserCircle size={55}/>
+                        <AvatarId postId={post._id}/>
                     </div>
                     <div className="gp-text">
                         <p>{post.content}</p>
                     </div>
                 </div>
+                <p className="g-date">{date}</p>
                 <div className="g-bot-bar">
                     <p className="p-comment">Commentaires</p>
                     <div className="g-likes">
@@ -95,7 +100,7 @@ function AllPost() {
                     </div>
                 </div>
                 <div className="g-comments">
-                    <Comments />
+                    <Comments postId={post._id} userPic={userPic}/>
                 </div>
             </div>
         </Fragment>

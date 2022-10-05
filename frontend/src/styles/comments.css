@@ -39,6 +39,11 @@
     color: #4E5166;
 }
 
+.create-youricon img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
 .create-text {
     min-width: 530px;
     max-width: 530px;

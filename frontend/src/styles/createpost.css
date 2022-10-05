@@ -27,6 +27,11 @@
     color: #4E5166;
 }
 
+.g-youricon img {
+    max-width: 70px;
+    max-height: 70px;
+}
+
 .post-text {
     margin: 20px;
     padding: 10px;

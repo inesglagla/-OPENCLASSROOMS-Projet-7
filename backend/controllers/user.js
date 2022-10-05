@@ -34,7 +34,7 @@ exports.signup = (req, res, next) => {
                 });
                 user.save()
                 .then(() => res.status(201).json({ message: 'Compte créé!' }))
-                .catch(error => res.status(400).json({ message: 'Informations déjà utilisées!' }));
+                .catch(error => res.status(400).json({ message: 'Une information est incorrect.' }));
             })
             .catch(error => res.status(500).json({ error })); 
         } else {

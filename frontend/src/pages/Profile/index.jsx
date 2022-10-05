@@ -1,10 +1,11 @@
 import axios from "axios";
 import NavbarHome from "../../components/NavbarHome";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import '../../styles/profile.css';
 import '../../styles/fonts.css';
 import logo from '../../assets/logo-solo.png';
-import { BiUserCircle } from 'react-icons/bi';
+import Avatar from "../../components/Avatar";
 import { MdOutlineEmail } from 'react-icons/md';
 import { MdCake } from 'react-icons/md';
 import { MdHome } from 'react-icons/md';
@@ -12,11 +13,14 @@ import { MdPhoneInTalk } from 'react-icons/md';
 import { MdWork } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
 import { MdAdminPanelSettings } from 'react-icons/md';
+import { MdOutlineSendAndArchive } from 'react-icons/md';
 
 function Profile() {
+    let { id } = useParams();
+
     //Récupérer le pseudonyme de l'utilisateur
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
+    const [userData, setUserData] = useState([]);
+    const [admin, setAdmin] = useState('');
     useEffect(() => {
         const userId = JSON.parse(localStorage.getItem('userId'));
         const token = JSON.parse(localStorage.getItem("token"));
@@ -26,33 +30,82 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            setUsername(res.data.username);
-            setEmail(res.data.email);
-            };
-            fetchUserData();
-        }, [])
-    
+            setUserData(res.data);
+            setAdmin(res.data.isAdmin);
+        };
+        fetchUserData();
+    }, [])
+
+    //Définir le rôle
+    const [role, setRole] = useState('');
+    useEffect(() => {
+        const verifyAdmin = async () => {
+            if (admin === true) {
+                setRole('Administrateur');
+            } else {
+                setRole('Utilisateur');
+            }
+        };
+        verifyAdmin();
+    }, [])
+
+    //Modifier l'avatar de l'utilisateur
+    const [file, setFile] = useState();
+    function handlePic(e) {
+        setFile(e.target.files[0]);
+    }
+
+    function changePic(e) {
+        e.preventDefault();
+        const token = JSON.parse(localStorage.getItem("token"));
+        const changePicFormData = new FormData();
+        changePicFormData.append("image", file);
+        axios.put(`http://localhost:3000/api/auth/users/${id}`, changePicFormData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            window.location.reload();
+        })
+        .catch((error)=> {
+            console.log(error);
+        });
+    };
+
     return (
             <div className="profile-page">
-                <NavbarHome/>
+                <NavbarHome userPic={userData.picture}/>
                 <div className="profile-bloc">
                     <div className="profile-user">
                         <div className="profile-usericon">
-                            <BiUserCircle size={200}/>
+                            <Avatar userPic={userData.picture}/>
+                            <div className="profile-change">
+                                <div className="profile-changepic">
+                                    <label htmlFor="file">Changer l'avatar</label>
+                                    <input className="profile-bouton" onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+                                </div>
+                                <div className="profile-send">
+                                    <MdOutlineSendAndArchive size={30} onClick={(e) => changePic(e)}/>
+                                </div>
+                            </div>
                         </div>
-                        <p className="profile-username">{username}</p>
-                        <p className="profile-email"><MdOutlineEmail size={20}/>{email}</p>
-                        <img src={logo} alt='Groupomania' className='profile-logo' />
+                        <div className="profile-bot">
+                            <p className="profile-username">{userData.username}</p>
+                            <p className="profile-email"><MdOutlineEmail size={20}/>{userData.email}</p>
+                            <img src={logo} alt='Groupomania' className='profile-logo' />
+                        </div>
                     </div>
                     <div className="profile-options">
                         <p className="profile-title">Informations personnelles</p>
                         <div className="profile-infos">
-                            <p className="profile-birthday"><MdCake size={20}/>??/??/????</p>
-                            <p className="profile-adress"><MdHome size={20}/>3 rue des coquelicots</p>
-                            <p className="profile-number"><MdPhoneInTalk size={20}/>01 XX XX XX XX</p>
-                            <p className="profile-job"><MdWork size={20}/>Travail dans l'entreprise</p>
-                            <p className="profile-join"><IoMdPerson size={20}/>Dans l'entreprise depuis le ??/??/????</p>
-                            <p className="profile-role"><MdAdminPanelSettings size={20}/>Admin/Utilisateur/Modérateur</p>
+                            <p className="profile-birthday"><MdCake size={20}/>{userData.birthday}</p>
+                            <p className="profile-adress"><MdHome size={20}/>{userData.adress}</p>
+                            <p className="profile-number"><MdPhoneInTalk size={20}/>{userData.phone}</p>
+                            <p className="profile-job"><MdWork size={20}/>{userData.job}</p>
+                            <p className="profile-join"><IoMdPerson size={20}/>{userData.jobdate}</p>
+                            <p className="profile-role"><MdAdminPanelSettings size={20}/>{role}</p>
                         </div>
                     </div>
                 </div>

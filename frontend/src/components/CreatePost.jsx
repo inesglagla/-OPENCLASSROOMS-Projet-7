@@ -2,11 +2,11 @@ import Axios from "axios";
 import { useState } from "react";
 import '../styles/fonts.css';
 import '../styles/createpost.css';
-import { BiUserCircle } from 'react-icons/bi';
+import Avatar from "../components/Avatar";
 import { BsFillImageFill } from 'react-icons/bs';
 import { MdOndemandVideo } from 'react-icons/md';
 
-function CreatePost() {
+function CreatePost({userPic}) {
   //Variables
   const url = `http://localhost:3000/api/posts`;
   const [error, setError] = useState('');
@@ -49,7 +49,7 @@ function CreatePost() {
       <div className='g-yourpost'>
         <div className='g-icontext'>
           <div className='g-youricon'>
-            <BiUserCircle size={55}/>
+            <Avatar userPic={userPic}/>
           </div>
           <textarea onChange={(e) => handleContent(e)} className='post-text' type="text" id="text" name="text" value={content}/>
         </div>

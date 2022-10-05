@@ -28,10 +28,44 @@
     width: 295px;
     height: 300px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-bottom: 2px dotted #4E5166;
     color: #FD2D01;
+}
+
+.profile-bouton {
+    display: none;
+}
+
+.profile-changepic {
+    width: 140px;
+    padding: 10px;
+    color: white;
+    background-color: #FD2D01;
+	border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.profile-change {
+    padding-top: 10px;
+    width: 295px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-send {
+    color: grey;
+    cursor: pointer;
+}
+
+.profile-send :hover {
+    color: green;
 }
 
 .profile-user p {
@@ -95,4 +129,18 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
+}
+
+.profile-logo {
+    display: flex;
+    margin: auto;
+    width: 110px;
+    height: 120px;
+    padding-bottom: 10px;
+    align-self: center;
+}
+
+.profile-avatar {
+    max-width: 170px;
+    max-height: 170px;
 }

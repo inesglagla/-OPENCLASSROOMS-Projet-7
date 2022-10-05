@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Avatar from "../components/Avatar";
 import '../styles/navbarhome.css';
 import '../styles/fonts.css';
 import { BiArrowToLeft } from 'react-icons/bi';
-import { BiUserCircle } from 'react-icons/bi';
 import { FaHome } from 'react-icons/fa';
 import { RiProfileLine } from 'react-icons/ri';
 
-function NavbarHome() {
+function NavbarHome({userPic}) {
     //Fonction pour se déconnecter
     function logOut () {
         localStorage.removeItem("token");
@@ -34,7 +34,8 @@ function NavbarHome() {
     //Se rendre sur la page Profile et Home
     const navigate = useNavigate();
     function goProfile() {
-        navigate("/profile");
+        const userId = JSON.parse(localStorage.getItem('userId'));
+        navigate(`/profile/${userId}`);
     };
 
     function goHome() {
@@ -54,7 +55,7 @@ function NavbarHome() {
                     <RiProfileLine size={30} onClick={goProfile}/>
                 </div>
                 <div className='user-photo'>
-                    <BiUserCircle size={55}/>
+                    <Avatar userPic={userPic}/>
                 </div>
                 <div className='user-name'>
                     <p>{username}</p>

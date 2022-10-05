@@ -20,7 +20,7 @@ root.render(
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<AuthRoute><Home /></AuthRoute>} />
       <Route path="/home/:id" element={<AuthRoute><ModifyPost /></AuthRoute>} />
-      <Route path="/profile" element={<AuthRoute><Profile /></AuthRoute>} />
+      <Route path="/profile/:id" element={<AuthRoute><Profile /></AuthRoute>} />
     </Routes>
   </BrowserRouter>
 );
