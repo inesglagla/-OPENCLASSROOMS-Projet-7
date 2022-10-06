@@ -3,27 +3,10 @@ import { useState, useEffect, Fragment } from "react";
 import '../styles/fonts.css';
 import '../styles/comments.css';
 import Avatar from "../components/Avatar";
-import { BiUserCircle } from 'react-icons/bi';
 import { GiTalk } from 'react-icons/gi';
 
 function Comments({postId, userPic}) {
-    const [username, setUsername] = useState('');
     const [contentComment, setContentComment] = useState([]);
-
-    //Récupérer le pseudonyme de l'utilisateur
-    useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem('userId'));
-        const token = JSON.parse(localStorage.getItem("token"));
-        const fetchUserData = async () => {
-            const res = await axios.get (`http://localhost:3000/api/auth/users/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-            setUsername(res.data.username);
-            };
-            fetchUserData();
-        }, [])
 
     //Récupérer les commentaires
     useEffect(() => {
@@ -37,7 +20,7 @@ function Comments({postId, userPic}) {
             setContentComment(res.data);
             };
             fetchCommentData();
-        }, [])
+        }, [postId])
     
     //Poster un commentaire
     //Fonction pour le contenu
@@ -84,11 +67,11 @@ function Comments({postId, userPic}) {
                     <div className="coms-all">
                         <div className="coms-one">
                             <div className='coms-top'>
-                                <p className="coms-username"><GiTalk size={20}/>{username}</p>
+                                <p className="coms-username"><GiTalk size={20}/>{com.userId}</p>
                             </div>
                             <div className="coms-bot">
                                 <div className="coms-usericon">
-                                    <BiUserCircle size={55}/>
+                                    {userPic}
                                 </div>
                                 <div className="coms-text">
                                     <p className="coms-content">{com.content}</p>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ActionsPost from './ActionsPost.jsx';
 
-function AuthBar({postId}) {
+function AuthBar({postId, isAdmin}) {
     //Récupérer le userId du post
     const [userIdPost, setUserIdPost] = useState([]);
     const [proprio, setProprio] = useState('');
@@ -17,15 +17,14 @@ function AuthBar({postId}) {
             setUserIdPost(res.data.userId);
             //Faire apparaître le composant pour modifier/supprimer un post qui appartient à l'utilisateur
             const userId = JSON.parse(localStorage.getItem("userId"));
-            console.log(userId.IsAdmin);
-            if (userId === userIdPost || userId.isAdmin === true) {
+            if (userId === userIdPost || isAdmin === true) {
                 setProprio(<ActionsPost postId={postId}/>);
             } else {
                 setProprio('');
             }
         }
         fetchAuthBar();
-    }, [])
+    }, [postId, userIdPost, isAdmin])
     
     return (
         <div>{proprio}</div>

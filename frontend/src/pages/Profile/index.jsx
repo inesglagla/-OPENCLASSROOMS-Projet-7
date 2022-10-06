@@ -47,7 +47,7 @@ function Profile() {
             }
         };
         verifyAdmin();
-    }, [])
+    }, [admin])
 
     //Modifier l'avatar de l'utilisateur
     const [file, setFile] = useState();
