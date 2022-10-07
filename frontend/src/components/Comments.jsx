@@ -3,10 +3,10 @@ import { useState, useEffect, Fragment } from "react";
 import '../styles/fonts.css';
 import '../styles/comments.css';
 import Avatar from "../components/Avatar";
-import { GiTalk } from 'react-icons/gi';
+import ShowComment from "../components/ShowComment";
 
 function Comments({postId, userPic}) {
-    const [contentComment, setContentComment] = useState([]);
+    const [commentData, setCommentData] = useState([]);
 
     //Récupérer les commentaires
     useEffect(() => {
@@ -17,7 +17,7 @@ function Comments({postId, userPic}) {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            setContentComment(res.data);
+            setCommentData(res.data);
             };
             fetchCommentData();
         }, [postId])
@@ -48,7 +48,7 @@ function Comments({postId, userPic}) {
       console.log(error);
     });
   };
-        
+
     return (
         <div className="coms-bloc">
             <div className="coms-create">
@@ -62,22 +62,10 @@ function Comments({postId, userPic}) {
                     <button className="create-button" type="submit" onClick={(e) => addComment(e)}>Envoyer</button>
                 </div>
             </div>
-            {contentComment.map(com => (
+            {commentData.map(com => (
                 <Fragment key= {com._id}>
                     <div className="coms-all">
-                        <div className="coms-one">
-                            <div className='coms-top'>
-                                <p className="coms-username"><GiTalk size={20}/>{com.userId}</p>
-                            </div>
-                            <div className="coms-bot">
-                                <div className="coms-usericon">
-                                    {userPic}
-                                </div>
-                                <div className="coms-text">
-                                    <p className="coms-content">{com.content}</p>
-                                </div>
-                            </div>
-                        </div>
+                        <ShowComment userId={com.userId} commentContent={com.content}/>
                     </div>
                 </Fragment>
             ))}

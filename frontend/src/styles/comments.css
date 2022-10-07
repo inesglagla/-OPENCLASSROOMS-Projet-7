@@ -122,3 +122,8 @@
 .coms-content {
     padding: 10px;
 }
+
+.profile-avatarShow {
+    max-width: 50px;
+    max-height: 50px;
+}
