@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
                     adress: req.body.adress,
                     phone: req.body.phone,
                     job: req.body.job,
-                    jobdate: req.body.jobdate,
+                    jobdate: new Date().toLocaleString(),
                 });
                 user.save()
                 .then(() => res.status(201).json({ message: 'Compte créé!' }))
@@ -60,7 +60,7 @@ exports.login = (req, res, next) => {
                     res.status(200).json({
                         userId: user._id,
                         token: jwt.sign (
-                            { userId: user._id, isAdmin: null },
+                            { userId: user._id, isAdmin: user.isAdmin },
                             `${TOKEN}`,
                             { expiresIn: '24h' }
                         )

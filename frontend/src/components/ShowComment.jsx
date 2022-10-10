@@ -1,11 +1,13 @@
 import axios from "axios";
+import moment from 'moment';
+import 'moment/locale/fr';
 import { useState, useEffect } from "react";
 import '../styles/fonts.css';
 import '../styles/comments.css';
 import { GiTalk } from 'react-icons/gi';
 import { BiUserCircle } from 'react-icons/bi';
 
-function ShowComment({userId, commentContent}) {
+function ShowComment({userId, commentContent, commentDate}) {
     //Récupérer les données de celui qui a envoyé le commentaire
     const [username, setUsername] = useState();
     const [avatar, setAvatar] = useState();
@@ -25,7 +27,6 @@ function ShowComment({userId, commentContent}) {
 
     //Conditions concernant l'avatar de l'utilisateur
     const [showAvatar, setShowAvatar] = useState('');
-
     useEffect(() => {
         const verifyPic = async () => {
             if (avatar === null) {
@@ -36,6 +37,11 @@ function ShowComment({userId, commentContent}) {
         };
         verifyPic();
     }, [avatar])
+
+    //Affichage de la date
+    moment.locale('fr');
+    const dateComment = commentDate;
+    const dateShowComment = moment(dateComment, 'DD.MM.YYYY, h:mm:ss a').format('LLLL');
 
     return (
         <div className="coms-one">
@@ -50,6 +56,7 @@ function ShowComment({userId, commentContent}) {
                     <p className="coms-content">{commentContent}</p>
                 </div>
             </div>
+            <p className="coms-dateshow">{moment(dateShowComment).fromNow()}</p>
         </div>
     )
 }

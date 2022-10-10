@@ -23,6 +23,7 @@ exports.createComment = (req, res, next) => {
                     userId: req.auth.userId,
                     postId: req.params.postId,
                     content: req.body.content,
+                    dateComment: new Date().toLocaleString(),
                 });
                 comment.save()
                 Post.findOneAndUpdate(

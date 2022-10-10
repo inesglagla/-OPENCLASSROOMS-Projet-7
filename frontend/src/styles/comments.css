@@ -69,6 +69,7 @@
 .coms-one {
     background-color: #fd2b01a9;
     margin: auto;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -126,4 +127,13 @@
 .profile-avatarShow {
     max-width: 50px;
     max-height: 50px;
+}
+
+.coms-dateshow {
+    padding-right: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    color: white;
+    font-size: 13px;
 }

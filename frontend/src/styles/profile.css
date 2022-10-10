@@ -76,6 +76,11 @@
     align-items: center;
 }
 
+.profile-avatarsvg svg {
+    width: 150px;
+    height: 150px;
+}
+
 .profile-username {
     font-size: 20px;
 }

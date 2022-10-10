@@ -61,12 +61,6 @@ function CreatePost({userPic}) {
             <label htmlFor="file">Ajouter une photo</label>
             <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
           </div>
-          <div className='post-video'>
-            <div className='post-videoicon'>
-              <MdOndemandVideo size={20}/>
-            </div>
-            <p>Ajouter une vidéo</p>
-          </div>
         </div>
         {error && <div className="error_post">{error}</div>}
         <button className="post-button" type="submit" onClick={(e) => addPost(e)}>Poster</button>

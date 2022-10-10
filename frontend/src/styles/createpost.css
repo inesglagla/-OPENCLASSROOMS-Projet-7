@@ -43,6 +43,7 @@
 
 .post-addnav {
     width: 700px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -56,21 +57,15 @@
     cursor: pointer;
 }
 
-.post-imageicon, .post-videoicon {
+.post-imageicon {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.post-image label, .post-video p {
+.post-image label {
+    cursor: pointer;
     padding-left: 10px;
-}
-
-.post-video {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: rgb(218, 17, 141);
 }
 
 .post-button {

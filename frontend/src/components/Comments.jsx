@@ -65,7 +65,7 @@ function Comments({postId, userPic}) {
             {commentData.map(com => (
                 <Fragment key= {com._id}>
                     <div className="coms-all">
-                        <ShowComment userId={com.userId} commentContent={com.content}/>
+                        <ShowComment userId={com.userId} commentContent={com.content} commentDate={com.dateComment}/>
                     </div>
                 </Fragment>
             ))}

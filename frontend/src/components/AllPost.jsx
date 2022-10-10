@@ -10,9 +10,7 @@ import '../styles/allpost.css';
 import { AiFillLike } from 'react-icons/ai';
 
 function AllPost({userPic, isAdmin, post}) {
-    moment.locale('fr')
     const token = JSON.parse(localStorage.getItem("token"));
-
     //Fonction pour liker un post
     const [likeCounter, setLikeCounter] = useState(post.likes);
     function likePost(id, e) {
@@ -47,7 +45,7 @@ function AllPost({userPic, isAdmin, post}) {
     const postText = post.content;
     useEffect(() => {
         const checkPic = async () => {
-            if (postImage !== undefined) {
+            if (postImage !== '') {
                 setOpenImage(true);
             } else {
                 setOpenImage(false);
@@ -63,6 +61,11 @@ function AllPost({userPic, isAdmin, post}) {
         checkPic();
         checkText();
     }, [postImage, postText])
+
+    //Date des publications
+    moment.locale('fr');
+    const datePost = post.date;
+    const dateShow = moment(datePost, 'DD.MM.YYYY, h:mm:ss a').format('LLLL');
 
     return (
             <div className="g-showpost">
@@ -84,7 +87,7 @@ function AllPost({userPic, isAdmin, post}) {
                     </div>
                     : ''}
                 </div>
-                <p className="g-date">{moment(post.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>
+                <p className="g-date">Publié {moment(dateShow).fromNow()}.</p>
                 <div className="g-bot-bar">
                     <p className="p-comment">Commentaires</p>
                     <div className="g-likes">

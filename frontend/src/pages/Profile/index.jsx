@@ -1,4 +1,6 @@
 import axios from "axios";
+import moment from 'moment';
+import 'moment/locale/fr';
 import NavbarHome from "../../components/NavbarHome";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -74,13 +76,22 @@ function Profile() {
         });
     };
 
+    //Affichage des dates
+    moment.locale('fr');
+    const dateBirthday = userData.birthday;
+    const dateShowBirthday = moment(dateBirthday, 'DD.MM.YYYY').format('L');
+    const dateJob = userData.jobdate;
+    const dateShowJob = moment(dateJob, 'DD.MM.YYYY').format('L');
+
     return (
             <div className="profile-page">
                 <NavbarHome userPic={userData.picture}/>
                 <div className="profile-bloc">
                     <div className="profile-user">
                         <div className="profile-usericon">
-                            <Avatar userPic={userData.picture}/>
+                            <div className="profile-avatarsvg">
+                                <Avatar userPic={userData.picture}/>
+                            </div>
                             <div className="profile-change">
                                 <div className="profile-changepic">
                                     <label htmlFor="file">Changer l'avatar</label>
@@ -100,11 +111,11 @@ function Profile() {
                     <div className="profile-options">
                         <p className="profile-title">Informations personnelles</p>
                         <div className="profile-infos">
-                            <p className="profile-birthday"><MdCake size={20}/>{userData.birthday}</p>
+                            <p className="profile-birthday"><MdCake size={20}/>{dateShowBirthday}</p>
                             <p className="profile-adress"><MdHome size={20}/>{userData.adress}</p>
                             <p className="profile-number"><MdPhoneInTalk size={20}/>{userData.phone}</p>
                             <p className="profile-job"><MdWork size={20}/>{userData.job}</p>
-                            <p className="profile-join"><IoMdPerson size={20}/>{userData.jobdate}</p>
+                            <p className="profile-join"><IoMdPerson size={20}/>{dateShowJob}</p>
                             <p className="profile-role"><MdAdminPanelSettings size={20}/>{role}</p>
                         </div>
                     </div>

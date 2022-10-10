@@ -1,9 +1,9 @@
 import Axios from "axios";
+import moment from "moment";
+import 'moment/locale/fr';
 import PhoneInput from 'react-phone-number-input/input';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
-import 'moment/locale/fr';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -22,15 +22,13 @@ function Signup () {
     adress: '',
     phone: '',
     job: '',
-    jobdate: '',
   });
+  moment.locale('fr');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [number, setNumber] = useState();
   const [startDate, setStartDate] = useState(new Date());
-  //Date actuelle
-  moment.locale('fr')
-  const date = moment().startOf('day').fromNow();
+  const birthdayDate = startDate.toLocaleString();
 
   //S'inscrire
   function submit(e) {
@@ -41,11 +39,10 @@ function Signup () {
       password: data.password,
       picture: null,
       isAdmin: false,
-      birthday: startDate,
+      birthday: birthdayDate,
       adress: data.adress,
       phone: number,
       job: data.job,
-      jobdate: date,
     })
     .then(res => {
       navigate('/login');
@@ -85,7 +82,7 @@ function Signup () {
                 </div>
                 <div className="form-field">
                   <label>Date de naissance</label>
-                  <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
+                  <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
                 </div>
                 <div className="form-field">
                   <label>Adresse</label>
