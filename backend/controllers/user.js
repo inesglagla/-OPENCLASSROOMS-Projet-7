@@ -4,39 +4,58 @@ const User = require('../models/User');
 require("dotenv").config();
 const TOKEN = process.env.TOKEN;
 
-//Validité de l'adresse email avec regEx
+//Usage de regex pour valider les données
 emailValidity = (email) => {
     return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
 }
-
-//Validité du pseudo avec regEx
 usernameValidity = (username) => {
-    return /^[a-zA-Z0-9_-]{4,16}$/.test(username);
+    return /^[a-zA-Z0-9_-]{2,16}$/.test(username);
+}
+adressValidity = (adress) => {
+    return /^[a-zA-Z0-9.,-_ ]{5,50}[ ]{0,2}$/.test(adress);
+}
+phoneValidity = (phone) => {
+    return /^(\+)[0-9]{11}$/.test(phone);
+}
+jobValidity = (job) => {
+    return /^[a-zA-Z]{4,16}$/.test(job);
 }
 
 //Inscription
 exports.signup = (req, res, next) => {
     if (emailValidity(req.body.email)) {
         if (usernameValidity(req.body.username)) {
-            bcrypt.hash(req.body.password, 10)
-            .then(hash => {
-                const user = new User({
-                    email: req.body.email,
-                    password: hash,
-                    username: req.body.username,
-                    picture: null,
-                    isAdmin : false,
-                    birthday: req.body.birthday,
-                    adress: req.body.adress,
-                    phone: req.body.phone,
-                    job: req.body.job,
-                    jobdate: new Date().toLocaleString(),
-                });
-                user.save()
-                .then(() => res.status(201).json({ message: 'Compte créé!' }))
-                .catch(error => res.status(400).json({ message: 'Une information est incorrect.' }));
-            })
-            .catch(error => res.status(500).json({ error })); 
+            if (adressValidity(req.body.adress)) {
+                if (phoneValidity(req.body.phone)) {
+                    if (jobValidity(req.body.job)) {
+                        bcrypt.hash(req.body.password, 10)
+                        .then(hash => {
+                            const user = new User({
+                                email: req.body.email,
+                                password: hash,
+                                username: req.body.username,
+                                picture: null,
+                                isAdmin : false,
+                                birthday: req.body.birthday,
+                                adress: req.body.adress,
+                                phone: req.body.phone,
+                                job: req.body.job,
+                                jobdate: new Date().toLocaleString(),
+                            });
+                            user.save()
+                            .then(() => res.status(201).json({ message: 'Compte créé!' }))
+                            .catch(error => res.status(400).json({ message: 'Une information est incorrect.' }));
+                        })
+                        .catch(error => res.status(500).json({ error }));
+                    } else {
+                        return res.status(401).json({ message: "Veuillez choisir un travail existant." });
+                    }
+                } else {
+                    return res.status(401).json({ message: "Veuillez choisir un numéro de téléphone valide." });
+                }
+            } else {
+                return res.status(401).json({ message: "Veuillez utiliser une adresse existante." });
+            }
         } else {
             return res.status(401).json({ message: "Veuillez choisir un nom d'utilisateur valide." });
         }
@@ -91,18 +110,23 @@ exports.putProfilePicture = (req, res, next) => {
         userId: req.auth.userId,
         picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,} : { ...req.body };
     delete userData._userId;
-    User.findOne({_id: req.params.id})
+    if (req.file === undefined) {
+        res.status(403).json({ message : 'Il faut envoyer une image.'});
+    } else {
+        User.findOne({_id: req.params.id})
         .then((user) => {
         if (user.id != req.auth.userId) {
             res.status(403).json({ message : 'Seul le propriétaire peut modifier son avatar.'});
         } else {
             User.updateOne(
-            { _id: req.params.id}, 
-            { ...userData, _id: req.params.id}
-            )
+                { _id: req.params.id}, 
+                { ...userData, _id: req.params.id}
+                )
             .then(() => res.status(200).json({ message : "Votre avatar a été changé."}))
             .catch(error => res.status(401).json({ error }));
         }
     })
     .catch((error) => {res.status(403).json({ error })});
+    }
+
 };

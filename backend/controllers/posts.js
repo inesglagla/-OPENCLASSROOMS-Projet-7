@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 const fs = require('fs');
 
 //Afficher tous les posts
@@ -134,28 +135,52 @@ exports.deletePost = (req, res, next) => {
           } else {
             if (req.file == undefined) {
               Post.deleteOne({ _id: req.params.id })
-              .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
+              .then(() => {
+                Comment.deleteMany({ postId: req.params.id })
+                .then(() => {
+                  res.status(200).json({ message: 'Le post a été supprimé!'})
+                })
+                .catch((error) => res.status(400).json({ error }));
+              })
               .catch((error) => res.status(400).json({ error }));
             } else {
               const filename = post.imageUrl.split('/images/')[1];
               fs.unlink(`images/${filename}`, () => {
-              Post.deleteOne({ _id: req.params.id })
-              .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-              .catch((error) => res.status(400).json({ error }));
+                Post.deleteOne({ _id: req.params.id })
+                .then(() => {
+                  Comment.deleteMany({ postId: req.params.id })
+                  .then(() => {
+                    res.status(200).json({ message: 'Le post a été supprimé!'})
+                  })
+                  .catch((error) => res.status(400).json({ error }));
+                })
+                .catch((error) => res.status(400).json({ error }));
               })
             }
           }
         } else {
           if (req.file == undefined) {
             Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-            .catch((error) => res.status(400).json({ error }));
+              .then(() => {
+                Comment.deleteMany({ postId: req.params.id })
+                .then(() => {
+                  res.status(200).json({ message: 'Le post a été supprimé!'})
+                })
+                .catch((error) => res.status(400).json({ error }));
+              })
+              .catch((error) => res.status(400).json({ error }));
           } else {
             const filename = post.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Le post a été supprimé!'}))
-            .catch((error) => res.status(400).json({ error }));
+              Post.deleteOne({ _id: req.params.id })
+              .then(() => {
+                Comment.deleteMany({ postId: req.params.id })
+                .then(() => {
+                  res.status(200).json({ message: 'Le post a été supprimé!'})
+                })
+                .catch((error) => res.status(400).json({ error }));
+              })
+              .catch((error) => res.status(400).json({ error }));
             })
           }
         }

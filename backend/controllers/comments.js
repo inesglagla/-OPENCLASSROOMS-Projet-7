@@ -27,7 +27,7 @@ exports.createComment = (req, res, next) => {
                 });
                 comment.save()
                 Post.findOneAndUpdate(
-                    { postId: req.params.id },
+                    { _id: req.params.postId },
                     { $push: { comments: comment } }
                 )
                 .then(() => res.status(201).json({ message: 'Commentaire ajouté!'}))
