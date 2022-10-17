@@ -81,7 +81,7 @@ exports.modifyPost = (req, res, next) => {
                 } else {
                 //Si on modifie l'image
                 const filename = post.imageUrl.split('/images/')[1];
-                fs.unlink(`images/${filename}`, () => {
+                fs.unlink(`images/posts/${filename}`, () => {
                   Post.updateOne(
                     { _id: req.params.id}, 
                     { ...postData, _id: req.params.id}
@@ -106,7 +106,7 @@ exports.modifyPost = (req, res, next) => {
               } else {
               //Si on modifie l'image
               const filename = post.imageUrl.split('/images/')[1];
-              fs.unlink(`images/${filename}`, () => {
+              fs.unlink(`images/posts/${filename}`, () => {
                 Post.updateOne(
                   { _id: req.params.id}, 
                   { ...postData, _id: req.params.id}
@@ -145,7 +145,7 @@ exports.deletePost = (req, res, next) => {
               .catch((error) => res.status(400).json({ error }));
             } else {
               const filename = post.imageUrl.split('/images/')[1];
-              fs.unlink(`images/${filename}`, () => {
+              fs.unlink(`images/posts/${filename}`, () => {
                 Post.deleteOne({ _id: req.params.id })
                 .then(() => {
                   Comment.deleteMany({ postId: req.params.id })
@@ -159,7 +159,7 @@ exports.deletePost = (req, res, next) => {
             }
           }
         } else {
-          if (req.file == undefined) {
+          if (post.imageUrl === undefined) {
             Post.deleteOne({ _id: req.params.id })
               .then(() => {
                 Comment.deleteMany({ postId: req.params.id })
@@ -171,7 +171,7 @@ exports.deletePost = (req, res, next) => {
               .catch((error) => res.status(400).json({ error }));
           } else {
             const filename = post.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            fs.unlink(`images/posts/${filename}`, () => {
               Post.deleteOne({ _id: req.params.id })
               .then(() => {
                 Comment.deleteMany({ postId: req.params.id })

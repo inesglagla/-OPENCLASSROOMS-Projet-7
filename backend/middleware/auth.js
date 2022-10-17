@@ -17,7 +17,6 @@ module.exports = (req, res, next) => {
             } else {
                 next();
             }
-            res.status(401).json({ message: "Vous n'avez pas l'autorisation." });
         } else {
             next();
         }
