@@ -3,7 +3,7 @@
 }
 
 .container {
-    width: 400px;
+    max-width: 400px;
     height: 560px;
     padding: 30px;
     margin: auto;
@@ -17,7 +17,7 @@
 }
 
 .container-signup {
-    width: 400px;
+    max-width: 400px;
     height: 1050px;
     padding: 30px;
     margin: auto;
@@ -82,4 +82,10 @@
 	color: white;
 	border-radius: 5px;
 	text-align: center;
+}
+
+@media (max-width: 320px) { 
+    .form-field input {
+        max-width: 250px;
+    }
 }

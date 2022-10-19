@@ -4,7 +4,6 @@ import '../../styles/fonts.css';
 import '../../styles/connexion.css';
 import logo from '../../assets/logo-solo.png';
 
-
 function Connexion() {
     return (
     <div>

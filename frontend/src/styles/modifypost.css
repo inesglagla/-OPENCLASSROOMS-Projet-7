@@ -1,41 +1,3 @@
-.modify-bloc {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-width: 1400px;
-    height: 700px;
-}
-
-.modify-bloc-int {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 300px;
-    background-color: #9497b1;
-    border: 2px solid black;
-    border-radius: 20px;
-    box-shadow: 0px 10px 31px -7px rgba(0,0,0,0.75);
-}
-
-.modify-text {
-    margin: 20px;
-    padding: 10px;
-    min-width: 480px;
-    max-width: 480px;
-    height: 100px;
-}
-
-.modify-actions {
-    width: 480px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .modify-image {
     padding: 10px;
     margin: 10px;
@@ -50,6 +12,9 @@
 }
 
 .modify-send {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 120px;
     padding: 10px;
     margin:10px;
@@ -62,4 +27,21 @@
 
 .modify-buttonpic {
     display: none;
+}
+
+.textarea-modify {
+    padding: 15px;
+    width: 520px;
+    min-height: 150px;
+    font-size: 15px;
+    resize: none;
+}
+
+.modify-p {
+    padding-left: 5px;
+    font-size: 11px;
+}
+
+.modify-image label {
+    cursor: pointer;
 }

@@ -1,21 +1,18 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import NavbarHome from "../components/NavbarHome";
 import '../styles/fonts.css';
 import '../styles/modifypost.css';
-import '../styles/createpost.css';
 
-function ModifyPost() {
-    const navigate = useNavigate();
+function ModifyPost({id, postInfos}) {
     const [error, setError] = useState('');
-    let { id } = useParams();
+    const [isFileDefinedM, setIsFileDefinedM] = useState();
 
     //Fonction pour l'image
-    const [file, setFile] = useState();
-    function handlePic(e) {
-        setFile(e.target.files[0]);
+    const [fileModify, setFileModify] = useState();
+    function handlePicM(e) {
+        setFileModify(e.target.files[0]);
+        setIsFileDefinedM(true);
     }
 
     //Fonction pour le contenu
@@ -28,9 +25,19 @@ function ModifyPost() {
     function modifyPost (e) {
         e.preventDefault();
         const token = JSON.parse(localStorage.getItem("token"));
+        let contentDefault = postInfos.content;
+        let fileDefault = postInfos.imageUrl;
         const modifyFormData = new FormData();
-        modifyFormData.append("image", file);
-        modifyFormData.append("content", contentText);
+        if (contentText === '') {
+            modifyFormData.append("content", contentDefault);
+        } else {
+            modifyFormData.append("content", contentText);
+        }
+        if (fileModify === '') {
+            modifyFormData.append("image", fileDefault);
+        } else {
+            modifyFormData.append("image", fileModify);
+        }
         axios.put(`http://localhost:3000/api/posts/${id}`, modifyFormData, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -38,29 +45,24 @@ function ModifyPost() {
         })
         .then((res) => {
             console.log(res);
-            navigate(`/home`);
+            window.location.reload();
         })
         .catch((error)=> {
             setError(error);
         });
     };
-    
+
     return (
         <div>
-            <NavbarHome />
-            <div className="modify-bloc">
-                <div className="modify-bloc-int">
-                    <textarea className="modify-text" onChange={(e) => handleContent(e)} type="text" id="text" name="text" value={contentText}/>
-                    <div className="modify-actions">
-                        <div className="modify-image">
-                            <label htmlFor="file">Changer l'image</label>
-                            <input className="modify-buttonpic" onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
-                        </div>
-                        <button className="modify-send" onClick={(e) => modifyPost(e)}>Envoyer</button>
-                    </div>
-                </div>
-                {error && <div className="error_post">{error}</div>}
+            <div className="modify-image">
+                <label htmlFor="fileM">Changer l'image</label>
+                {isFileDefinedM
+                ? <p className="modify-p">(image chargée)</p>
+                : <input className="modify-buttonpic" onChange={(e) => handlePicM(e)} type="file" id="fileM" name="fileM" accept=".jpg,.jpeg,.png"/>}
             </div>
+            <textarea className="textarea-modify" onChange={(e) => handleContent(e)} type="text" id="text" name="text" defaultValue={postInfos.content}/>
+            <button className="modify-send" onClick={(e) => modifyPost(e)}>Modifier</button>
+            {error && <div className="error_post">{error}</div>}
         </div>
     )
 }

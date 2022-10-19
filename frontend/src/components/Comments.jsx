@@ -51,6 +51,13 @@ function Comments({postId, userPic}) {
 
     return (
         <div className="coms-bloc">
+            {commentData.map(com => (
+                <Fragment key= {com._id}>
+                    <div className="coms-all">
+                        <ShowComment userId={com.userId} commentContent={com.content} commentDate={com.dateComment}/>
+                    </div>
+                </Fragment>
+            ))}
             <div className="coms-create">
                 <div className="create-block">
                     <div className="create-icontext">
@@ -62,13 +69,6 @@ function Comments({postId, userPic}) {
                     <button className="create-button" type="submit" onClick={(e) => addComment(e)}>Envoyer</button>
                 </div>
             </div>
-            {commentData.map(com => (
-                <Fragment key= {com._id}>
-                    <div className="coms-all">
-                        <ShowComment userId={com.userId} commentContent={com.content} commentDate={com.dateComment}/>
-                    </div>
-                </Fragment>
-            ))}
         </div>
     )
 }

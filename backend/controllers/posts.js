@@ -54,111 +54,43 @@ exports.createPost = (req, res, next) => {
 
 //Modifier un post
 exports.modifyPost = (req, res, next) => {
-  User.findOne({ _id: req.auth.userId })
-    .then((user) => {
-    const isAdmin = user.isAdmin;
     const postData = req.file ? {
       content: req.body.content,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
       } : { ...req.body };
       Post.findOne({_id: req.params.id})
-        .then((post) => {
-          if (post.userId != req.auth.userId) {
-            if (isAdmin === false) {
-              res.status(403).json({ message : 'Seul le propriétaire peut modifier son post.'});
-            } else {
-              if (req.body.content === undefined && req.file === undefined) {
-                res.status(401).json({ message : 'Vous ne pouvez pas envoyer des informations vides.'});
-              } else {
-                //On vérifie si on ne modifie pas l'image
-                if (req.file === undefined) {
-                  Post.updateOne(
-                    { _id: req.params.id}, 
-                    { ...postData, _id: req.params.id}
-                    )
-                  .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-                  .catch(error => res.status(401).json({ error }));
-                } else {
-                //Si on modifie l'image
-                const filename = post.imageUrl.split('/images/')[1];
-                fs.unlink(`images/posts/${filename}`, () => {
-                  Post.updateOne(
-                    { _id: req.params.id}, 
-                    { ...postData, _id: req.params.id}
-                    )
-                  .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-                  .catch((error) => res.status(401).json({ error }));
-                })
-              }}
-            }
+      .then((post) => {
+        if (req.body.content === undefined && req.file === undefined) {
+          res.status(401).json({ message : 'Vous ne pouvez pas envoyer des informations vides.'});
+        } else {
+          //On vérifie si on ne modifie pas l'image
+          if (req.file === undefined) {
+            Post.updateOne(
+              { _id: req.params.id}, 
+              { ...postData, _id: req.params.id}
+              )
+            .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
+            .catch(error => res.status(401).json({ error }));
           } else {
-            if (req.body.content === undefined && req.file === undefined) {
-              res.status(401).json({ message : 'Vous ne pouvez pas envoyer des informations vides.'});
-            } else {
-              //On vérifie si on ne modifie pas l'image
-              if (req.file === undefined) {
-                Post.updateOne(
-                  { _id: req.params.id}, 
-                  { ...postData, _id: req.params.id}
-                  )
-                .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-                .catch(error => res.status(401).json({ error }));
-              } else {
-              //Si on modifie l'image
-              const filename = post.imageUrl.split('/images/')[1];
-              fs.unlink(`images/posts/${filename}`, () => {
-                Post.updateOne(
-                  { _id: req.params.id}, 
-                  { ...postData, _id: req.params.id}
-                  )
-                .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
-                .catch((error) => res.status(401).json({ error }));
-              })
-            }
-          }}
-      })
-      .catch((error) => res.status(403).json({ error }));
-    })
-    .catch((error) => res.status(500).json({ error }));
+          //Si on modifie l'image
+          const filename = post.imageUrl.split('/images/')[1];
+          fs.unlink(`images/posts/${filename}`, () => {
+            Post.updateOne(
+              { _id: req.params.id}, 
+              { ...postData, _id: req.params.id}
+              )
+            .then(() => res.status(200).json({message : 'Le post a été modifié!'}))
+            .catch((error) => res.status(401).json({ error }));
+          })
+        }
+      }})
+      .catch((error) => res.status(500).json({ error }));
 };
 
 //Supprimer un post
 exports.deletePost = (req, res, next) => {
-  User.findOne({ _id: req.auth.userId })
-    .then((user) => {
-      const isAdmin = user.isAdmin;
       Post.findOne({ _id: req.params.id })
       .then((post) => {
-        if (post.userId != req.auth.userId) {
-          if (isAdmin === false) {
-              res.status(403).json({ message : 'Seul le propriétaire peut supprimer son post.'});
-          } else {
-            if (req.file == undefined) {
-              Post.deleteOne({ _id: req.params.id })
-              .then(() => {
-                Comment.deleteMany({ postId: req.params.id })
-                .then(() => {
-                  res.status(200).json({ message: 'Le post a été supprimé!'})
-                })
-                .catch((error) => res.status(400).json({ error }));
-              })
-              .catch((error) => res.status(400).json({ error }));
-            } else {
-              const filename = post.imageUrl.split('/images/')[1];
-              fs.unlink(`images/posts/${filename}`, () => {
-                Post.deleteOne({ _id: req.params.id })
-                .then(() => {
-                  Comment.deleteMany({ postId: req.params.id })
-                  .then(() => {
-                    res.status(200).json({ message: 'Le post a été supprimé!'})
-                  })
-                  .catch((error) => res.status(400).json({ error }));
-                })
-                .catch((error) => res.status(400).json({ error }));
-              })
-            }
-          }
-        } else {
           if (post.imageUrl === undefined) {
             Post.deleteOne({ _id: req.params.id })
               .then(() => {
@@ -183,11 +115,7 @@ exports.deletePost = (req, res, next) => {
               .catch((error) => res.status(400).json({ error }));
             })
           }
-        }
-      })
-      .catch((error) => res.status(500).json({ error }));
-    })
-    .catch((error) => res.status(500).json({ error }));
+        })
 };
 
 //Liker un post
@@ -225,6 +153,6 @@ exports.addLikePost = (req, res, next) => {
     } else {
       return res.status(400).json({ message: "Vous devez être connecté pour liker."});
     }
-    })
-  .catch((error) => res.status(500).json({error}));
+  })
+  .catch((error) => res.status(500).json({ error }));
 };

@@ -3,10 +3,10 @@ import moment from "moment";
 import 'moment/locale/fr';
 import PhoneInput from 'react-phone-number-input/input';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import "react-datepicker/dist/react-datepicker2.css";
 import '../../styles/loginsign.css';
 
 function Signup () {

@@ -8,18 +8,12 @@ import '../../styles/profile.css';
 import '../../styles/fonts.css';
 import logo from '../../assets/logo-solo.png';
 import Avatar from "../../components/Avatar";
-import { MdOutlineEmail } from 'react-icons/md';
-import { MdCake } from 'react-icons/md';
-import { MdHome } from 'react-icons/md';
-import { MdPhoneInTalk } from 'react-icons/md';
-import { MdWork } from 'react-icons/md';
+import { MdOutlineEmail, MdCake, MdHome, MdPhoneInTalk, MdWork, MdAdminPanelSettings, MdOutlineSendAndArchive } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
-import { MdAdminPanelSettings } from 'react-icons/md';
-import { MdOutlineSendAndArchive } from 'react-icons/md';
 
 function Profile() {
+    const [error, setError] = useState('');
     let { id } = useParams();
-
     //Récupérer le pseudonyme de l'utilisateur
     const [userData, setUserData] = useState([]);
     const [admin, setAdmin] = useState('');
@@ -52,9 +46,11 @@ function Profile() {
     }, [admin])
 
     //Modifier l'avatar de l'utilisateur
+    const [isFileDefined, setIsFileDefined] = useState();
     const [file, setFile] = useState();
     function handlePic(e) {
         setFile(e.target.files[0]);
+        setIsFileDefined(true);
     }
 
     function changePic(e) {
@@ -72,7 +68,7 @@ function Profile() {
             window.location.reload();
         })
         .catch((error)=> {
-            console.log(error);
+            setError(error);
         });
     };
 
@@ -95,17 +91,20 @@ function Profile() {
                             <div className="profile-change">
                                 <div className="profile-changepic">
                                     <label htmlFor="file">Changer l'avatar</label>
-                                    <input className="profile-bouton" onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+                                    {isFileDefined
+                                    ? <p className="inputimage-p">(image chargée)</p>
+                                    : <input className="profile-bouton" onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>}
                                 </div>
                                 <div className="profile-send">
                                     <MdOutlineSendAndArchive size={30} onClick={(e) => changePic(e)}/>
                                 </div>
                             </div>
+                            {error && <p className="error_post">Il faut envoyer une image.</p>}
                         </div>
                         <div className="profile-bot">
                             <p className="profile-username">{userData.username}</p>
                             <p className="profile-email"><MdOutlineEmail size={20}/>{userData.email}</p>
-                            <img src={logo} alt='Groupomania' className='profile-logo' />
+                            <img src={logo} alt='Groupomania' className='profile-logo'/>
                         </div>
                     </div>
                     <div className="profile-options">

@@ -4,18 +4,19 @@ import '../styles/fonts.css';
 import '../styles/createpost.css';
 import Avatar from "../components/Avatar";
 import { BsFillImageFill } from 'react-icons/bs';
-import { MdOndemandVideo } from 'react-icons/md';
 
 function CreatePost({userPic}) {
   //Variables
   const url = `http://localhost:3000/api/posts`;
   const [error, setError] = useState('');
+  const [isFileDefined, setIsFileDefined] = useState();
   const token = JSON.parse(localStorage.getItem("token"));
 
   //Fonction pour l'image
   const [file, setFile] = useState();
   function handlePic(e) {
     setFile(e.target.files[0]);
+    setIsFileDefined(true);
   }
 
   //Fonction pour le contenu
@@ -59,7 +60,9 @@ function CreatePost({userPic}) {
               <BsFillImageFill size={20}/>
             </div>
             <label htmlFor="file">Ajouter une photo</label>
-            <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>
+            {isFileDefined
+            ? <p className="inputimage-p">(image chargée)</p>
+            : <input className='inputimage' onChange={(e) => handlePic(e)} type="file" id="file" name="file" accept=".jpg,.jpeg,.png"/>}
           </div>
         </div>
         {error && <div className="error_post">{error}</div>}

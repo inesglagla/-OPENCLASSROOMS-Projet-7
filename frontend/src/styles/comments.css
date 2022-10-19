@@ -1,12 +1,14 @@
 .coms-bloc {
-    width: 650px;
+    max-width: 650px;
     min-height: 200px;
     border-radius: 30px;
     padding-bottom: 10px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .coms-all {
-    width: 650px;
+    max-width: 650px;
     min-height: 200px;
     display: flex;
     align-items: center;
@@ -45,13 +47,13 @@
 }
 
 .create-text {
-    min-width: 530px;
-    max-width: 530px;
+    width: 530px;
     height: 100px;
     border: 2px solid gainsboro;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0px 10px 31px -7px rgb(0 0 0 / 75%);
+    resize: none;
 }
 
 .create-button {
@@ -136,4 +138,31 @@
     justify-content: flex-end;
     color: white;
     font-size: 13px;
+}
+
+@media (max-width: 320px) {
+    .create-text {
+        min-width: 170px;
+        max-width: 170px;
+    }
+
+    .coms-one {
+        width: 210px;
+    }
+    
+    .coms-bot {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .coms-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 0px;
+    }
+
+    .coms-text {
+        width: 190px;
+    }
 }

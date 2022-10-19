@@ -1,20 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import AllPost from "../components/AllPost";
 import '../styles/fonts.css';
 import '../styles/allpost.css';
 import '../styles/createpost.css';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { RiPencilLine } from 'react-icons/ri';
+import { RiDeleteBin6Line, RiPencilLine } from 'react-icons/ri';
 import { MdOutlineFormatAlignRight } from 'react-icons/md';
 
-function ActionsPost(props) {
+function ActionsPost({id, modifyValueChild}) {
     //Partie SUPPRESSION
     const [open, setOpen] = useState([Boolean]);
     const token = JSON.parse(localStorage.getItem("token"));
 
     //Fonction pour supprimer un post
-    let id = props.postId;
     function deletePost (id, e) {
         e.preventDefault();
         axios.delete(`http://localhost:3000/api/posts/${id}`, {
@@ -32,9 +30,9 @@ function ActionsPost(props) {
     };
 
     //Partie MODIFICATION
-    const navigate = useNavigate();
+    const [stateModify, setStateModify] = useState(Boolean);
     function goModify(id) {
-        navigate(`/home/${id}`);
+        modifyValueChild(true);
     };
 
     return (

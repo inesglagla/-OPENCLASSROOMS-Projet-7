@@ -41,11 +41,19 @@ exports.createComment = (req, res, next) => {
 
 //Supprimer un commentaire
 exports.deleteComment = (req, res, next) => {
-    Comment.findOne({ _id: req.params.id })
-    .then(() => {
-        Comment.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Commentaire supprimé!'}))
-        .catch((error) => res.status(400).json({ error }));
-    })
+    Post.findOne({ _id: req.params.postId })
+    .then((result) => {
+            if (result.id === req.params.postId) {
+                Comment.findOne({ postId: result.id })
+                .then(() => {
+                    Comment.deleteOne({ postId: result.id })
+                    .then(() => res.status(200).json({ message: 'Commentaire supprimé!'}))
+                    .catch((error) => res.status(400).json({ error }));
+                })
+                .catch((error) => res.status(500).json({ error }));
+            } else {
+                res.status(400).json({ message: "Cette publication n'existe pas." });
+            }
+        })
     .catch((error) => res.status(500).json({ error }));
 };

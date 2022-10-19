@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 300px;
+    max-width: 300px;
     height: 550px;
     background-color: white;
     border-radius: 10px;
@@ -48,6 +48,10 @@
     font-size: 15px;
     cursor: pointer;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-change {
@@ -114,7 +118,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 500px;
+    max-width: 500px;
     height: 530px;
     text-align: center;
 }
@@ -148,4 +152,29 @@
 .profile-avatar {
     max-width: 170px;
     max-height: 170px;
+}
+
+@media (max-width: 560px) { 
+    .profile-bloc {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: 1200px;
+    }
+
+    .profile-options {
+        max-width: 350px;
+    }
+
+    .user-name {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .user-name {
+        text-align: center;
+        font-size: 10px;
+    }
 }
