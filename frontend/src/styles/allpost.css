@@ -35,6 +35,7 @@
 .gp-text {
     margin: 10px;
     padding: 15px;
+    width: 100%;
     max-width: 550px;
     min-height: 150px;
     background-color: #fd2b01a9;
@@ -44,17 +45,17 @@
 }
 
 .g-bot-bar {
-    max-width: 675px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: nowrap;
     gap: 10px;
     border-bottom : 2px solid #4E5166;
 }
 
 .p-comment {
-    padding-right: 490px;
     font-size: 18px;
 }
 
@@ -76,9 +77,11 @@
     padding : 10px;
     max-width: 500px;
     max-height: 500px;
+    width: 100%;
 }
 
 .g-contentuser {
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -86,7 +89,7 @@
 
 .g-top-bar {
     padding-top: 10px;
-    width: 620px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -156,11 +159,31 @@
     outline: none;
     resize:none;
     padding: 15px;
-    max-width: 520px;
-    min-width: 520px;
+    width: 100%;
+    max-width: 550px;
     min-height: 150px;
     color:white;
     font-size: 15px;
+}
+
+.g-picture {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+}
+
+@media (max-width: 425px) {
+    .g-contentuser {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gp-text {
+        margin: auto;
+    }
 }
 
 @media (max-width: 320px) {
@@ -171,10 +194,6 @@
     .g-contentuser {
         display: flex;
         flex-direction: column;
-    }
-
-    .gp-text {
-        max-width: 250px;
     }
 
     .g-bot-bar {

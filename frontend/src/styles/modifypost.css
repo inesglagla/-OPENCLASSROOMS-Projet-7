@@ -31,7 +31,8 @@
 
 .textarea-modify {
     padding: 15px;
-    width: 520px;
+    width: 100%;
+    max-width: 520px;
     min-height: 150px;
     font-size: 15px;
     resize: none;
@@ -44,4 +45,13 @@
 
 .modify-image label {
     cursor: pointer;
+}
+
+@media (max-width: 320px) {
+    .gp-text div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
