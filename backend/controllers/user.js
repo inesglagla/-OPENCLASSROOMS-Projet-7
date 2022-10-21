@@ -9,7 +9,7 @@ emailValidity = (email) => {
     return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
 }
 usernameValidity = (username) => {
-    return /^[a-zA-Z0-9_-]{2,16}$/.test(username);
+    return /^[A-Z][A-Za-z\é\è\ê\s\-]{2,16}$/.test(username);
 }
 adressValidity = (adress) => {
     return /^[a-zA-Z0-9.,-_ ]{5,50}[ ]{0,2}$/.test(adress);
@@ -18,7 +18,7 @@ phoneValidity = (phone) => {
     return /^(\+)[0-9]{11}$/.test(phone);
 }
 jobValidity = (job) => {
-    return /^[a-zA-Z]{4,16}$/.test(job);
+    return /^[A-Z][A-Za-z\é\è\ê\s\-]{2,30}$/.test(job);
 }
 
 //Inscription
