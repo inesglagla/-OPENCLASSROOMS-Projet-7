@@ -5,7 +5,6 @@ import Navbar from "../../components/Navbar";
 import '../../styles/loginsign.css';
 
 function Login () {
-
   const url = 'http://localhost:3000/api/auth/login';
   const [data, setData] = useState({
     username:'',

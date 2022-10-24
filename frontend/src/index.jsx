@@ -14,11 +14,11 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Connexion />} />
-      <Route path="*" element={<NotFound />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<AuthRoute><Home /></AuthRoute>} />
       <Route path="/profile/:id" element={<AuthRoute><Profile /></AuthRoute>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
 );

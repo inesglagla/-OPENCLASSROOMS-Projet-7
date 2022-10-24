@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import AllPost from "../components/AllPost";
 import '../styles/fonts.css';
 import '../styles/allpost.css';
 import '../styles/createpost.css';
@@ -30,8 +29,7 @@ function ActionsPost({id, modifyValueChild}) {
     };
 
     //Partie MODIFICATION
-    const [stateModify, setStateModify] = useState(Boolean);
-    function goModify(id) {
+    function goModify() {
         modifyValueChild(true);
     };
 

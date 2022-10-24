@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import "react-datepicker/dist/react-datepicker2.css";
+import "react-datepicker/dist/react-datepicker.css";
 import '../../styles/loginsign.css';
 
 function Signup () {
