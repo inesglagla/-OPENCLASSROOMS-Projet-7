@@ -75,7 +75,6 @@ function AllPost({userPic, isAdmin, post, id}) {
     const [modifyDefined, setModifyDefined] = useState(Boolean);
     const [modifyShow, setModifyShow] = useState(Boolean);
     useEffect(() => {
-        console.log(modifyDefined);
         if (modifyDefined === true) {
             setModifyShow(true);
         } else {
