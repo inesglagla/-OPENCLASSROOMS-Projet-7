@@ -1,18 +1,19 @@
 # Projet n°7 - Groupomania
 
 ## Comment installer le code?
-   * Faire un git-clone
+   * Faire un git clone
+   * Ouvrir le dossier dans un éditeur de code.
 
 ## Comment faire fonctionner le code?
 #### Lancer le frontend :
-* Ouvrir un terminal sur le dossier principal puis exécuter 'npm install'.
 * Entrer 'cd frontend' dans le terminal pour se rendre dans le dossier frontend.
+* Exécuter 'npm install' pour installer les packages.
 * Exécuter 'npm run start' pour démarrer le frontend.
 * Le serveur frontend se trouve sur le port suivant : http://localhost:3001
 
 #### Lancer le backend :
 * Entrer 'cd backend' dans le terminal pour se rendre dans le dossier backend.
-* Exécuter 'npm install -g nodemon' pour charger le package nodemon. (si nodemon n'est pas installé)
+* Exécuter 'npm i nodemon' pour charger le package nodemon. (si nodemon n'est pas installé)
 * Exécuter 'nodemon server' pour démarrer le backend.
 * Le serveur backend se trouve sur le port suivant : http://localhost:3000
 
