@@ -13,7 +13,7 @@
 
 #### Lancer le backend :
 * Entrer 'cd backend' dans le terminal pour se rendre dans le dossier backend.
-* Exécuter 'npm i nodemon' pour charger le package nodemon. (si nodemon n'est pas installé)
+* Exécuter 'npm i nodemon' pour charger les packages et nodemon. (seulement 'npm i' si nodemon est déjà installé)
 * Exécuter 'nodemon server' pour démarrer le backend.
 * Le serveur backend se trouve sur le port suivant : http://localhost:3000
 
