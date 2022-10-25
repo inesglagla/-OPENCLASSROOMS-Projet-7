@@ -3,6 +3,8 @@
 ## Comment installer le code?
    * Créer un dossier "Groupomania".
    * Télécharger le code du GitHub puis y mettre les deux dossiers dans celui créé précedemment.
+   OU BIEN
+   * Faire un git-clone du github
 
 ## Comment faire fonctionner le code?
 Ouvrir le dossier "Groupomania" dans un éditeur de code. (ex: VS Code)
@@ -14,7 +16,7 @@ Ouvrir le dossier "Groupomania" dans un éditeur de code. (ex: VS Code)
 
 #### Lancer le backend :
 * Entrer 'cd backend' dans le terminal pour se rendre dans le dossier backend.
-* Exécuter 'npm install -g nodemon' pour charger le package nodemon.
+* Exécuter 'npm install -g nodemon' pour charger le package nodemon. (si nodemon n'est pas installé)
 * Exécuter 'nodemon server' pour démarrer le backend.
 * Le serveur backend se trouve sur le port suivant : http://localhost:3000
 
@@ -25,31 +27,31 @@ Ouvrir le dossier "Groupomania" dans un éditeur de code. (ex: VS Code)
 
 ## Qu'est-ce qui a été utilisé?
 #### FRONTEND :
--Framework: React
--Axios
--moment
--react-icons
--react-phone-number-input
--react-datepicker
--react-dom
--react-router-dom
--redux
--react-redux
+- React
+- Axios
+- moment
+- react-icons
+- react-phone-number-input
+- react-datepicker
+- react-dom
+- react-router-dom
+- redux
+- react-redux
 
 #### BACKEND :
--Node.js
--Express
--MongoDB
--mongoose
--mongoose-unique-validator
--password-validator
--bcrypt
--cors
--dotenv
--express-mongo-sanitize
--helmet
--multer
--jsonwebtoken
+- Node.js
+- Express
+- MongoDB
+- mongoose
+- mongoose-unique-validator
+- password-validator
+- bcrypt
+- cors
+- dotenv
+- express-mongo-sanitize
+- helmet
+- multer
+- jsonwebtoken
 
 ## Données du compte administrateur?
 * Adresse email : admin@email.com
