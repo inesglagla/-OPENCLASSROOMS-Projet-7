@@ -1,13 +1,9 @@
 # Projet n°7 - Groupomania
 
 ## Comment installer le code?
-   * Créer un dossier "Groupomania".
-   * Télécharger le code du GitHub puis y mettre les deux dossiers dans celui créé précedemment.
-   OU BIEN
-   * Faire un git-clone du github
+   * Faire un git-clone
 
 ## Comment faire fonctionner le code?
-Ouvrir le dossier "Groupomania" dans un éditeur de code. (ex: VS Code)
 #### Lancer le frontend :
 * Ouvrir un terminal sur le dossier principal puis exécuter 'npm install'.
 * Entrer 'cd frontend' dans le terminal pour se rendre dans le dossier frontend.
@@ -52,6 +48,9 @@ Ouvrir le dossier "Groupomania" dans un éditeur de code. (ex: VS Code)
 - helmet
 - multer
 - jsonwebtoken
+
+## Base de données :
+  - MongoDB
 
 ## Données du compte administrateur?
 * Adresse email : admin@email.com
